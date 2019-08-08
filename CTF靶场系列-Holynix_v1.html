@@ -1,0 +1,366 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址<br /></h2>
+<p><a href="http://21ltr.com/scenes/21LTR.com_Scene1_2.120_v1.0.iso"></a></p>
+<pre class="selected">https://download.vulnhub.com/holynix/holynix-v1.tar.bz2<br /></pre>
+<h2>实战演练</h2>
+<p>这个靶机ISO加载之后，发现扫不了IP，好像是因为配置文件的问题，所以我这边修改了一下MAC地址</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551507051_5c7a1e6b62549.png" src="images/20190302/1551507051_5c7a1e6b62549.png" width="690" height="674" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551507051_5c7a1e6b62549.png" width="690" height="674" /></p></noscript>
+<h3>信息收集</h3>
+<p>找到靶机的IP为192.168.199.140</p>
+<p><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551506971_5c7a1e1bd8880.png" width="690" height="230" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551507111_5c7a1ea76027a.png" src="images/20190302/1551507111_5c7a1ea76027a.png" width="690" height="270" />看来这个web系统挺多漏洞的</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551506971_5c7a1e1bd8880.png" width="690" height="230" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551507111_5c7a1ea76027a.png" width="690" height="270" />看来这个web系统挺多漏洞的</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551507217_5c7a1f11e3148.png" src="images/20190302/1551507217_5c7a1f11e3148.png" width="690" height="484" />打开80web服务</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551507217_5c7a1f11e3148.png" width="690" height="484" />打开80web服务</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551508254_5c7a231e16484.png" src="images/20190302/1551508254_5c7a231e16484.png" width="690" height="356" />有登录框，试试注入</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508254_5c7a231e16484.png" width="690" height="356" />有登录框，试试注入</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551508283_5c7a233be7fa8.png" src="images/20190302/1551508283_5c7a233be7fa8.png" width="690" height="290" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508283_5c7a233be7fa8.png" width="690" height="290" /></p></noscript>
+<p>emmmm，用kali的sqlmap跑不了</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551508463_5c7a23ef30594.png" src="images/20190302/1551508463_5c7a23ef30594.png" width="690" height="627" /><span style="color:rgb(51,51,51);">我换成本地的SQLMAP就可以</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508463_5c7a23ef30594.png" width="690" height="627" /><span style="color:rgb(51,51,51);">我换成本地的SQLMAP就可以</span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509217_5c7a26e19ebaf.png" src="images/20190302/1551509217_5c7a26e19ebaf.png" width="690" height="212" />root用户</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509217_5c7a26e19ebaf.png" width="690" height="212" />root用户</span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509294_5c7a272e14368.png" src="images/20190302/1551509294_5c7a272e14368.png" width="690" height="194" />看看能不能找到登录账号</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509294_5c7a272e14368.png" width="690" height="194" />看看能不能找到登录账号</span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509373_5c7a277d384c3.png" width="633" height="325" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509405_5c7a279dcf92d.png" width="609" height="395" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509447_5c7a27c745ee6.png" width="334" height="226" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509543_5c7a2827e2911.png" src="images/20190302/1551509543_5c7a2827e2911.png" width="537" height="375" />这密码不知道什么加密，暂时走不起来，先去WEB系统查探一下</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509373_5c7a277d384c3.png" width="633" height="325" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509405_5c7a279dcf92d.png" width="609" height="395" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509447_5c7a27c745ee6.png" width="334" height="226" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509543_5c7a2827e2911.png" width="537" height="375" />这密码不知道什么加密，暂时走不起来，先去WEB系统查探一下</span></p></noscript>
+<p>往输入框输入单引号，password字段报错，那就试试用一下万能密码</p>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508657_5c7a24b1935b0.png" width="690" height="147" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551508825_5c7a25594ee68.png" src="images/20190302/1551508825_5c7a25594ee68.png" width="690" height="408" /><br /></span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508657_5c7a24b1935b0.png" width="690" height="147" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508825_5c7a25594ee68.png" width="690" height="408" /><br /></span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551508843_5c7a256b71aea.png" src="images/20190302/1551508843_5c7a256b71aea.png" width="690" height="316" /><br /></span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551508843_5c7a256b71aea.png" width="690" height="316" /><br /></span></p></noscript>
+<p>可以绕过登录进到系统里面，有个上传功能，试试</p>
+<p>使用正常的图片，发现这个用户不能上传</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509746_5c7a28f2e4160.png" src="images/20190302/1551509746_5c7a28f2e4160.png" width="690" height="323" />分析数据包，发现了参数uid</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509746_5c7a28f2e4160.png" width="690" height="323" />分析数据包，发现了参数uid</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509816_5c7a2938d74cd.png" src="images/20190302/1551509816_5c7a2938d74cd.png" width="690" height="270" />遍历一下，存在越权漏洞</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509816_5c7a2938d74cd.png" width="690" height="270" />遍历一下，存在越权漏洞</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551509950_5c7a29be23184.png" src="images/20190302/1551509950_5c7a29be23184.png" width="690" height="700" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551509950_5c7a29be23184.png" width="690" height="700" /></p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551510703_5c7a2cafa9c1c.png" src="images/20190302/1551510703_5c7a2cafa9c1c.png" width="690" height="369" />好像不在这里</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551510703_5c7a2cafa9c1c.png" width="690" height="369" />好像不在这里</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551510666_5c7a2c8a701d3.png" src="images/20190302/1551510666_5c7a2c8a701d3.png" width="690" height="234" />这系统好像能够文件包含，试试</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551510666_5c7a2c8a701d3.png" width="690" height="234" />这系统好像能够文件包含，试试</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551510767_5c7a2cef656a2.png" src="images/20190302/1551510767_5c7a2cef656a2.png" width="690" height="161" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551510767_5c7a2cef656a2.png" width="690" height="161" /></p></noscript>
+<p>没有上传根目录。在这个时候突然想到了，可以用sqlmap写shell，现在路径也知道了</p>
+<p>emmmm，不行</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551510991_5c7a2dcf4e17f.png" src="images/20190302/1551510991_5c7a2dcf4e17f.png" width="690" height="344" />扫一下目录吧</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551510991_5c7a2dcf4e17f.png" width="690" height="344" />扫一下目录吧</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551511361_5c7a2f41c1041.png" src="images/20190302/1551511361_5c7a2f41c1041.png" width="592" height="723" />没发现什么东西，换种思路吧，有没有可能上传的目录就是用户的目录</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551511361_5c7a2f41c1041.png" width="592" height="723" />没发现什么东西，换种思路吧，有没有可能上传的目录就是用户的目录</p></noscript>
+<p>我的shell上传到ID为2的用户，查看sqlmap发现用户名是<span style="color:rgb(51,51,51);">etenenbaum</span></p>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551511625_5c7a3049cb6c3.png" src="images/20190302/1551511625_5c7a3049cb6c3.png" width="690" height="304" />nice！！！</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551511625_5c7a3049cb6c3.png" width="690" height="304" />nice！！！</span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551511649_5c7a306108366.png" src="images/20190302/1551511649_5c7a306108366.png" width="690" height="451" />但是发现解析不了</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551511649_5c7a306108366.png" width="690" height="451" />但是发现解析不了</span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551511866_5c7a313a25864.png" src="images/20190302/1551511866_5c7a313a25864.png" width="690" height="176" />在上传页面那边有一个可以上传压缩包，然后可以帮你解压的功能，<a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php">shell地址</a></span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551511866_5c7a313a25864.png" width="690" height="176" />在上传页面那边有一个可以上传压缩包，然后可以帮你解压的功能，<a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php">shell地址</a></span></p></noscript>
+<p><span style="color:rgb(51,51,51);"><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512150_5c7a3256e9b03.png" width="690" height="219" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512230_5c7a32a6e0099.png" width="690" height="333" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512271_5c7a32cfc413e.png" width="690" height="427" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551512324_5c7a3304924f1.png" src="images/20190302/1551512324_5c7a3304924f1.png" width="690" height="272" /><br /></span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512150_5c7a3256e9b03.png" width="690" height="219" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512230_5c7a32a6e0099.png" width="690" height="333" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512271_5c7a32cfc413e.png" width="690" height="427" /><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512324_5c7a3304924f1.png" width="690" height="272" /><br /></span></p></noscript>
+<p>获取到服务器的权限</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551512562_5c7a33f2b5858.png" src="images/20190302/1551512562_5c7a33f2b5858.png" width="585" height="555" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512562_5c7a33f2b5858.png" width="585" height="555" /></p></noscript>
+<p></p>
+<p>看来之前的网络DHCP不到是因为MAC地址问题</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190302/1551512790_5c7a34d63c795.png" src="images/20190302/1551512790_5c7a34d63c795.png" width="690" height="244" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190302/1551512790_5c7a34d63c795.png" width="690" height="244" /></p></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="197121" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

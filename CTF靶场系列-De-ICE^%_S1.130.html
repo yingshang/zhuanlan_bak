@@ -1,0 +1,455 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址<br /></h2>
+<p><a href="http://21ltr.com/scenes/21LTR.com_Scene1_2.120_v1.0.iso"></a></p>
+<pre>http://hackingdojo.com/downloads/iso/De-ICE_S1.130.iso<br /></pre>
+<h2>实战演练</h2>
+<p><span style="background-color:transparent;">原文再续，书接上文s1.100的系统</span></p>
+<h3>任务信息</h3>
+<pre>寻找用户信息</pre>
+<h3>信息收集</h3>
+<p>netdiscover发现IP是192.168.1.20</p>
+<p><img style="margin:15px auto;" alt="image.png" src="images/20190228/1551332569_5c7774d9cebae.png" width="690" height="180" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551402155_5c7884ab0b18c.png" src="images/20190301/1551402155_5c7884ab0b18c.png" width="690" height="321" />FTP没有信息</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190228/1551332569_5c7774d9cebae.png" width="690" height="180" /><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551402155_5c7884ab0b18c.png" width="690" height="321" />FTP没有信息</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551402276_5c788524ba2e6.png" src="images/20190301/1551402276_5c788524ba2e6.png" width="690" height="189" />web的话找到一个用户名，试试用来爆破一下ssh</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551402276_5c788524ba2e6.png" width="690" height="189" />web的话找到一个用户名，试试用来爆破一下ssh</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551402365_5c78857d3f78c.png" src="images/20190301/1551402365_5c78857d3f78c.png" width="690" height="266" />我尝试爆破这个账号的ssh密码，发现爆破不了</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551402365_5c78857d3f78c.png" width="690" height="266" />我尝试爆破这个账号的ssh密码，发现爆破不了</p></noscript>
+<p>telnet smtp服务器看看，其实找到用户名可以根据社会工程学去分析密码</p>
+<pre>邮箱：customerserviceadmin@nosecbank.com 手机号：1-337-133-7133
+那么我们可以将这个拆分为
+customer
+service 
+admin
+c
+s
+administrator
+然后将这些组合在一起，就找到了一个用户csadmin</pre>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551402810_5c78873a8aede.png" src="images/20190301/1551402810_5c78873a8aede.png" width="690" height="238" />爆破cadmin这个账号成功</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551402810_5c78873a8aede.png" width="690" height="238" />爆破cadmin这个账号成功</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551404812_5c788f0c4c7d2.png" src="images/20190301/1551404812_5c788f0c4c7d2.png" width="690" height="150" />使用这个账号进行登录</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551404812_5c788f0c4c7d2.png" width="690" height="150" />使用这个账号进行登录</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551413170_5c78afb2ae0aa.png" src="images/20190301/1551413170_5c78afb2ae0aa.png" width="523" height="666" />很多账号，csadmin只是普通的账号，我们看看还有没有东西</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551413170_5c78afb2ae0aa.png" width="523" height="666" />很多账号，csadmin只是普通的账号，我们看看还有没有东西</p></noscript>
+<p>找到一个加密文件，但是加密失败</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551413366_5c78b0765644f.png" src="images/20190301/1551413366_5c78b0765644f.png" width="690" height="201" />邮件</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551413366_5c78b0765644f.png" width="690" height="201" />邮件</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551413452_5c78b0cc189cc.png" src="images/20190301/1551413452_5c78b0cc189cc.png" width="690" height="591" />从邮件我们可以注意到几个点，儿子的名字叫&#8221;<span style="color:rgb(85,85,85);">Donovin</span>&#8220;，邮件发送的时间，儿子的出生时间2010-12=1998，可以推测大概的密码字典</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551413452_5c78b0cc189cc.png" width="690" height="591" />从邮件我们可以注意到几个点，儿子的名字叫&#8221;<span style="color:rgb(85,85,85);">Donovin</span>&#8220;，邮件发送的时间，儿子的出生时间2010-12=1998，可以推测大概的密码字典</p></noscript>
+<pre>Donovin
+donovin
+2010
+1998
+12
+Donovindonovin
+Donovin2010
+Donovin1998
+Donovin12
+donovindonovin
+donovin2010
+donovin1998
+donovin12
+2010donovin
+1998donovin
+12donovin
+donovin201012
+donovin20101998
+donovin122010
+donovin199812<br /></pre>
+<p>爆破一下</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551413936_5c78b2b043b7d.png" src="images/20190301/1551413936_5c78b2b043b7d.png" width="690" height="188" />登录</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551413936_5c78b2b043b7d.png" width="690" height="188" />登录</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551414136_5c78b3782d7db.png" src="images/20190301/1551414136_5c78b3782d7db.png" width="622" height="412" />继续找信息</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551414136_5c78b3782d7db.png" width="622" height="412" />继续找信息</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551414225_5c78b3d12975e.png" src="images/20190301/1551414225_5c78b3d12975e.png" width="678" height="712" />猜测<span style="color:rgb(85,85,85);">dbadmin的密码是databaser，但是不行</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551414225_5c78b3d12975e.png" width="678" height="712" />猜测<span style="color:rgb(85,85,85);">dbadmin的密码是databaser，但是不行</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551414315_5c78b42bb2212.png" src="images/20190301/1551414315_5c78b42bb2212.png" width="690" height="158" />但是按照上面那个思路，他的密码都是字母+数字，我们试一下加上数字</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551414315_5c78b42bb2212.png" width="690" height="158" />但是按照上面那个思路，他的密码都是字母+数字，我们试一下加上数字</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551414720_5c78b5c049273.png" src="images/20190301/1551414720_5c78b5c049273.png" width="349" height="395" />爆破</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551414720_5c78b5c049273.png" width="349" height="395" />爆破</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415018_5c78b6ea692bb.png" src="images/20190301/1551415018_5c78b6ea692bb.png" width="690" height="192" />还是权限不够，继续找信息</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415018_5c78b6ea692bb.png" width="690" height="192" />还是权限不够，继续找信息</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415153_5c78b7712aa85.png" src="images/20190301/1551415153_5c78b7712aa85.png" width="674" height="725" />邮件</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415153_5c78b7712aa85.png" width="674" height="725" />邮件</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415237_5c78b7c5e6ea1.png" src="images/20190301/1551415237_5c78b7c5e6ea1.png" width="690" height="269" />在这封邮件里面我们看到内容加密了，使用string命令</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415237_5c78b7c5e6ea1.png" width="690" height="269" />在这封邮件里面我们看到内容加密了，使用string命令</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415347_5c78b8331df01.png" src="images/20190301/1551415347_5c78b8331df01.png" width="690" height="906" />还记得我们用过三个账号不断发现邮件吗？他们有三个部分，现在将他们三个部分组合在一起看看会有什么东西</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415347_5c78b8331df01.png" width="690" height="906" />还记得我们用过三个账号不断发现邮件吗？他们有三个部分，现在将他们三个部分组合在一起看看会有什么东西</span></p></noscript>
+<p><span style="color:rgb(85,85,85);">dbadmin</span></p>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415536_5c78b8f09d0e8.png" src="images/20190301/1551415536_5c78b8f09d0e8.png" width="690" height="675" />csadmin</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415536_5c78b8f09d0e8.png" width="690" height="675" />csadmin</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415670_5c78b9761c668.png" src="images/20190301/1551415670_5c78b9761c668.png" width="690" height="666" />sdadmin</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415670_5c78b9761c668.png" width="690" height="666" />sdadmin</span></p></noscript>
+<p><span style="color:rgb(85,85,85);"><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415746_5c78b9c2eee71.png" src="images/20190301/1551415746_5c78b9c2eee71.png" width="690" height="421" />将这些代码组合在一起</span></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415746_5c78b9c2eee71.png" width="690" height="421" />将这些代码组合在一起</span></p></noscript>
+<pre class="selected">public class Decoder {
+ // PART 1
+ 
+ int[] processLoop(String input){ 
+  int strL=input.length();
+  int lChar=(int)input.charAt(strL-1); 
+  int fChar=(int)input.charAt(0); 
+  int[] encArr = new int[strL+2]; 
+  for(int i=1;i &lt; strL+1;i++){ 
+   encArr[i]=(int)input.charAt(i-1);} 
+  encArr[0]=(int)lChar; 
+  encArr[encArr.length-1]=(int)fChar; 
+  encArr=backLoop(encArr); 
+  encArr=loopBack(encArr); 
+  encArr=loopProcess(encArr); 
+  int j=encArr.length-1; 
+  for(int i=0;i &lt; encArr.length;i++){ 
+   if(i==j) break;
+   int t=encArr[i]; 
+   encArr[i]=encArr[j]; 
+   encArr[j]=t;j--;}
+  return encArr;} 
+ 
+ /*
+  * Note the pseudocode will be implemented with the  
+  * root account and my account, we still need to implement it with the csadmin, sdadmin, 
+  * and dbadmin accounts though
+  */
+ 
+ // PART 2
+ int[] backLoop(int[] input){ 
+  int ref=input.length;
+  int a=input[1]; int b=input[ref-1]; 
+  int check=(a+b)/2; 
+  for(int i=0;i &lt; ref;i++){ 
+   if(i%2==0) input[i]=(input[i]%check)+(ref+i); 
+   else input[i]=(input[i]+ref+i);}
+  return input;} 
+ int[] loopProcess(int[] input){  
+  for(int i=0;i &lt; input.length;i++){ 
+   if(input[i]==40||input[i]==41) input[i]+=input.length; 
+   else if(input[i]==45) input[i]+=20+i;} 
+  return input;} 
+ 
+ 
+ // PART 3
+ int[] loopBack(int[] input){ 
+  int ref=input.length/2; 
+  int[] encNew =new int[input.length+ref]; 
+  int ch=0; 
+  for(int i=(ref/2);i &lt; input.length;i++){ 
+   encNew[i]=input[ch]; ch++;} 
+  for(int i=0;i &lt; encNew.length;i++){ 
+   if(encNew[i]&lt;=33) encNew[i]=33+(++ref*2); 
+   else if(encNew[i] &gt;= 126) encNew[i]=126-(--ref*2); 
+   else{ 
+    if(i%2==0) encNew[i]-=(i%3); 
+    else encNew[i]+=(i%2);}} 
+  return encNew;}
+ 
+ 
+ public static void main(String[] args) {
+  Decoder d = new Decoder();
+  int[] c = d.processLoop(args[0]); 
+  for (int i = 0; i &lt; c.length; i++)
+   System.out.print((char)c[i]); 
+ }
+}<br /></pre>
+<p>解密到root密码</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551415973_5c78baa52eea5.png" src="images/20190301/1551415973_5c78baa52eea5.png" width="376" height="172" />登录到root账号，获取信息</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551415973_5c78baa52eea5.png" width="376" height="172" />登录到root账号，获取信息</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190301/1551416092_5c78bb1c68491.png" src="images/20190301/1551416092_5c78bb1c68491.png" width="690" height="444" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190301/1551416092_5c78bb1c68491.png" width="690" height="444" /></p></noscript>
+<p></p>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="196915" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

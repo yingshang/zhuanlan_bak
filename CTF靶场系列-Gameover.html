@@ -1,0 +1,457 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h2>下载地址<br /></h2>
+<pre>http://sourceforge.net/projects/null-gameover/files/GameOver_v0.1_Null_VM.7z/download</pre>
+<h2>实战演练</h2>
+<p>使用root，密码gameover登录查看IP地址为192.168.199.138</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551682133_5c7cca55c54a4.png" src="images/20190304/1551682133_5c7cca55c54a4.png" width="690" height="448" /><b>Section 1不写了，太简单，网上有的是答案</b></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551682133_5c7cca55c54a4.png" width="690" height="448" /><b>Section 1不写了，太简单，网上有的是答案</b></p></noscript>
+<p>我们来玩一下section 2</p>
+<p><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551682625_5c7ccc412ec4a.png" src="images/20190304/1551682625_5c7ccc412ec4a.png" width="690" height="242" /></p>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551682625_5c7ccc412ec4a.png" width="690" height="242" /></p></noscript>
+<h3> Hackademic <br /></h3>
+<div><b>挑战一</b></div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551682890_5c7ccd4a44281.png" width="690" height="188" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551684787_5c7cd4b3a4b7f.png" src="images/20190304/1551684787_5c7cd4b3a4b7f.png" width="690" height="217" />看到登录框就使用万能密码看看能不能绕过</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551682890_5c7ccd4a44281.png" width="690" height="188" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551684787_5c7cd4b3a4b7f.png" width="690" height="217" />看到登录框就使用万能密码看看能不能绕过</div></noscript>
+<div>试了一堆都不行</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551684854_5c7cd4f647d54.png" src="images/20190304/1551684854_5c7cd4f647d54.png" width="690" height="235" />查看页面源代码，好像发现了了不起的东西</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551684854_5c7cd4f647d54.png" width="690" height="235" />查看页面源代码，好像发现了了不起的东西</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551684908_5c7cd52caee33.png" src="images/20190304/1551684908_5c7cd52caee33.png" width="690" height="183" />试试这个</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551684908_5c7cd52caee33.png" width="690" height="183" />试试这个</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551684996_5c7cd584e0980.png" src="images/20190304/1551684996_5c7cd584e0980.png" width="674" height="282" />进来了</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551684996_5c7cd584e0980.png" width="674" height="282" />进来了</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551685017_5c7cd5991d331.png" src="images/20190304/1551685017_5c7cd5991d331.png" width="690" height="346" />使用bp找到邮件信息</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551685017_5c7cd5991d331.png" width="690" height="346" />使用bp找到邮件信息</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551685538_5c7cd7a226569.png" src="images/20190304/1551685538_5c7cd7a226569.png" width="690" height="467" />在之前挑战1提示Friday13，这个就是破局关键</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551685538_5c7cd7a226569.png" width="690" height="467" />在之前挑战1提示Friday13，这个就是破局关键</div></noscript>
+<pre>Jasson Killer Friday13@JasonLives.com</pre>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551685851_5c7cd8dbf14c4.png" src="images/20190304/1551685851_5c7cd8dbf14c4.png" width="690" height="312" />搞定第一关</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551685851_5c7cd8dbf14c4.png" width="690" height="312" />搞定第一关</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551685868_5c7cd8ecac084.png" src="images/20190304/1551685868_5c7cd8ecac084.png" width="690" height="246" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551685868_5c7cd8ecac084.png" width="690" height="246" /></div></noscript>
+<p><b>第二关</b>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551686304_5c7cdaa04888d.png" width="690" height="95" /><br /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551686841_5c7cdcb9635d6.png" src="images/20190304/1551686841_5c7cdcb9635d6.png" width="690" height="598" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551686304_5c7cdaa04888d.png" width="690" height="95" /><br /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551686841_5c7cdcb9635d6.png" width="690" height="598" /></div></noscript>
+<div>查看页面源代码，找到这一段JavaScript
+<div></div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551686813_5c7cdc9d17e66.png" src="images/20190304/1551686813_5c7cdc9d17e66.png" width="690" height="374" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551686813_5c7cdc9d17e66.png" width="690" height="374" /></div></noscript>
+<div>将整段html代码复制到http://www.runoob.com/runcode，然后加上alert（）函数，往输入框随便输入内容就可以弹出密码</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687147_5c7cddeba13c0.png" src="images/20190304/1551687147_5c7cddeba13c0.png" width="690" height="400" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687147_5c7cddeba13c0.png" width="690" height="400" /></div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687017_5c7cdd69889b6.png" src="images/20190304/1551687017_5c7cdd69889b6.png" width="690" height="438" />密码是：enter a coin to play</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687017_5c7cdd69889b6.png" width="690" height="438" />密码是：enter a coin to play</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687064_5c7cdd987809c.png" src="images/20190304/1551687064_5c7cdd987809c.png" width="690" height="631" /><b>第三关</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687064_5c7cdd987809c.png" width="690" height="631" /><b>第三关</b></div></noscript>
+</div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687660_5c7cdfec23de1.png" src="images/20190304/1551687660_5c7cdfec23de1.png" width="690" height="43" />简单的弹窗</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687660_5c7cdfec23de1.png" width="690" height="43" />简单的弹窗</b></div></noscript>
+<p>
+<div><b>&lt;script&gt;alert(&#8220;XSS&#8221;);&lt;/script&gt;<br /></b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687957_5c7ce11574e86.png" src="images/20190304/1551687957_5c7ce11574e86.png" width="690" height="268" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687957_5c7ce11574e86.png" width="690" height="268" /><br /></b></div></noscript>
+<div><b>第四关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687673_5c7cdff942317.png" src="images/20190304/1551687673_5c7cdff942317.png" width="690" height="66" />加密一下代码</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687673_5c7cdff942317.png" width="690" height="66" />加密一下代码</b></div></noscript>
+<div><b>&lt;script&gt;alert(String.fromCharCode(88,83,83,33))&lt;/script&gt;<br /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551688273_5c7ce2512cc76.png" src="images/20190304/1551688273_5c7ce2512cc76.png" width="690" height="511" /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688273_5c7ce2512cc76.png" width="690" height="511" /></b></div></noscript>
+<p><b><br /></b>
+<div><b>第五关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687683_5c7ce003596e0.png" width="690" height="24" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551688521_5c7ce349f36a8.png" src="images/20190304/1551688521_5c7ce349f36a8.png" width="690" height="205" />叫你买他的家的浏览器才可以看内容，那就将user-agent头修改成他家</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687683_5c7ce003596e0.png" width="690" height="24" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688521_5c7ce349f36a8.png" width="690" height="205" />叫你买他的家的浏览器才可以看内容，那就将user-agent头修改成他家</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688677_5c7ce3e5a8c57.png" width="690" height="274" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551688701_5c7ce3fdba758.png" src="images/20190304/1551688701_5c7ce3fdba758.png" width="690" height="215" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688677_5c7ce3e5a8c57.png" width="690" height="274" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688701_5c7ce3fdba758.png" width="690" height="215" /><br /></b></div></noscript>
+<div><b>第六关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687699_5c7ce0130358e.png" width="690" height="198" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551688923_5c7ce4dbcf275.png" src="images/20190304/1551688923_5c7ce4dbcf275.png" width="690" height="377" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687699_5c7ce0130358e.png" width="690" height="198" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688923_5c7ce4dbcf275.png" width="690" height="377" /><br /></b></div></noscript>
+<div><b>查看页面源代码，发现一堆url编码的东西</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551688965_5c7ce505a6e20.png" src="images/20190304/1551688965_5c7ce505a6e20.png" width="690" height="146" />解密这部分东西，然后就找到了密码</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551688965_5c7ce505a6e20.png" width="690" height="146" />解密这部分东西，然后就找到了密码</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689078_5c7ce57647655.png" width="667" height="535" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551689111_5c7ce597a4cec.png" src="images/20190304/1551689111_5c7ce597a4cec.png" width="690" height="446" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689078_5c7ce57647655.png" width="667" height="535" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689111_5c7ce597a4cec.png" width="690" height="446" /><br /></b></div></noscript>
+<div><b>第七关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687713_5c7ce0214f0aa.png" src="images/20190304/1551687713_5c7ce0214f0aa.png" width="690" height="80" />查看源代码，没发现到什么东西，我们用bp扫描一下</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687713_5c7ce0214f0aa.png" width="690" height="80" />查看源代码，没发现到什么东西，我们用bp扫描一下</b></div></noscript>
+<div><b>emmmm，还是有点东西的</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551689604_5c7ce784765f2.png" src="images/20190304/1551689604_5c7ce784765f2.png" width="690" height="388" />使用Irene登录进去</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689604_5c7ce784765f2.png" width="690" height="388" />使用Irene登录进去</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551689653_5c7ce7b50c01f.png" src="images/20190304/1551689653_5c7ce7b50c01f.png" width="690" height="327" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689653_5c7ce7b50c01f.png" width="690" height="327" /><br /></b></div></noscript>
+<div><b>这里存在越权漏洞，修改成admin</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689782_5c7ce8365c026.png" width="690" height="331" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551689800_5c7ce848d0db3.png" src="images/20190304/1551689800_5c7ce848d0db3.png" width="690" height="467" /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689782_5c7ce8365c026.png" width="690" height="331" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551689800_5c7ce848d0db3.png" width="690" height="467" /></b></div></noscript>
+<p>
+<div><b>第八关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551687725_5c7ce02dc3c7e.png" src="images/20190304/1551687725_5c7ce02dc3c7e.png" width="690" height="96" />输入help查看可用的命令</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687725_5c7ce02dc3c7e.png" width="690" height="96" />输入help查看可用的命令</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551690048_5c7ce940289b3.png" src="images/20190304/1551690048_5c7ce940289b3.png" width="690" height="600" />ls找到一个文件</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690048_5c7ce940289b3.png" width="690" height="600" />ls找到一个文件</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551690078_5c7ce95e18edd.png" src="images/20190304/1551690078_5c7ce95e18edd.png" width="553" height="147" />base64加密，解密一下</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690078_5c7ce95e18edd.png" width="553" height="147" />base64加密，解密一下</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690107_5c7ce97bd6048.png" width="690" height="117" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551690139_5c7ce99bc92af.png" src="images/20190304/1551690139_5c7ce99bc92af.png" width="690" height="147" />然后我们su一下，就会出来输入框，输入账号和密码</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690107_5c7ce97bd6048.png" width="690" height="117" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690139_5c7ce99bc92af.png" width="690" height="147" />然后我们su一下，就会出来输入框，输入账号和密码</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690213_5c7ce9e506b40.png" width="583" height="177" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551690230_5c7ce9f62e6a9.png" src="images/20190304/1551690230_5c7ce9f62e6a9.png" width="690" height="123" /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690213_5c7ce9e506b40.png" width="583" height="177" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690230_5c7ce9f62e6a9.png" width="690" height="123" /></b></div></noscript>
+<p>
+<div><b>第九关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687738_5c7ce03a8e364.png" width="690" height="74" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190304/1551690685_5c7cebbd4cbbb.png" src="images/20190304/1551690685_5c7cebbd4cbbb.png" width="690" height="172" />在这里存在一个后门地址</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687738_5c7ce03a8e364.png" width="690" height="74" /><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551690685_5c7cebbd4cbbb.png" width="690" height="172" />在这里存在一个后门地址</b></div></noscript>
+<pre>http://192.168.199.138/Hackademic_Challenges/ch009/tyj0rL.php</pre>
+<div><b>打开它</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873202_5c7fb4b257101.png" src="images/20190306/1551873202_5c7fb4b257101.png" width="690" height="541" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873202_5c7fb4b257101.png" width="690" height="541" /><br /></b></div></noscript>
+<div><b>打开这个记事本</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873247_5c7fb4df1633b.png" src="images/20190306/1551873247_5c7fb4df1633b.png" width="690" height="189" />使用这个账号密码登录一下</b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873247_5c7fb4df1633b.png" width="690" height="189" />使用这个账号密码登录一下</b></div></noscript>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873312_5c7fb520eee0e.png" src="images/20190306/1551873312_5c7fb520eee0e.png" width="690" height="296" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873312_5c7fb520eee0e.png" width="690" height="296" /><br /></b></div></noscript>
+<div><b>搞定</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873340_5c7fb53c5d910.png" src="images/20190306/1551873340_5c7fb53c5d910.png" width="690" height="408" /><br /></b></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873340_5c7fb53c5d910.png" width="690" height="408" /><br /></b></div></noscript>
+<p>
+<div><b>第十关</b></div>
+<div><b><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687748_5c7ce0446fb6c.png" width="690" height="163" /><br /></b><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873463_5c7fb5b7168a7.png" src="images/20190306/1551873463_5c7fb5b7168a7.png" width="690" height="310" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190304/1551687748_5c7ce0446fb6c.png" width="690" height="163" /><br /></b><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873463_5c7fb5b7168a7.png" width="690" height="310" /></div></noscript>
+<div>查看源代码</div>
+<div>看到这个参数，使用bp修改一下</div>
+<div><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873498_5c7fb5da7cb76.png" width="690" height="513" /><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873573_5c7fb6259c56b.png" width="690" height="311" /><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873593_5c7fb639d1645.png" src="images/20190306/1551873593_5c7fb639d1645.png" width="690" height="308" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873498_5c7fb5da7cb76.png" width="690" height="513" /><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873573_5c7fb6259c56b.png" width="690" height="311" /><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873593_5c7fb639d1645.png" width="690" height="308" /></div></noscript>
+<div>一看这编码就知道URL编码，对其进行解密</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873694_5c7fb69eed380.png" src="images/20190306/1551873694_5c7fb69eed380.png" width="690" height="189" />关闭弹窗后就可以进入这个界面</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873694_5c7fb69eed380.png" width="690" height="189" />关闭弹窗后就可以进入这个界面</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873771_5c7fb6eb6a562.png" src="images/20190306/1551873771_5c7fb6eb6a562.png" width="690" height="378" />提交那个号码</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873771_5c7fb6eb6a562.png" width="690" height="378" />提交那个号码</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551873834_5c7fb72a55e7b.png" src="images/20190306/1551873834_5c7fb72a55e7b.png" width="404" height="417" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551873834_5c7fb72a55e7b.png" width="404" height="417" /></div></noscript>
+<div><span style="color:rgb(0,112,192);font-family:inherit;font-weight:bold;background-color:transparent;">Vicnum，过。。没意思 </span></div>
+<h3>WackoPicko <br /></h3>
+<p>这个也很简单，登录框有注入，文件上传漏洞，存储和反射XSS，还有命令执行漏洞，在那个检测字符强度的那里。</p>
+<h3>Insecure Web App ，太简单了，过</h3>
+<h3>BodgeIT ，页面有问题，过</h3>
+<h3>PuzzleMall </h3>
+<div>一个购物中心的渗透</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551879684_5c7fce046e455.png" src="images/20190306/1551879684_5c7fce046e455.png" width="690" height="310" />emmm，端口没啥东西</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551879684_5c7fce046e455.png" width="690" height="310" />emmm，端口没啥东西</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551879876_5c7fcec4611ad.png" src="images/20190306/1551879876_5c7fcec4611ad.png" width="690" height="225" />扫描一下目录</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551879876_5c7fcec4611ad.png" width="690" height="225" />扫描一下目录</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551879950_5c7fcf0e21f7f.png" src="images/20190306/1551879950_5c7fcf0e21f7f.png" width="690" height="814" />emmm，没用，一堆404</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551879950_5c7fcf0e21f7f.png" width="690" height="814" />emmm，没用，一堆404</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551880038_5c7fcf66c3227.png" src="images/20190306/1551880038_5c7fcf66c3227.png" width="690" height="152" />登录注入，先不搞，万一有漏洞，就不想研究其他思路。既然是购物中心，那就少不了存在业务逻辑的问题</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551880038_5c7fcf66c3227.png" width="690" height="152" />登录注入，先不搞，万一有漏洞，就不想研究其他思路。既然是购物中心，那就少不了存在业务逻辑的问题</div></noscript>
+<div>先注册一个账号把</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551880234_5c7fd02a9696b.png" src="images/20190306/1551880234_5c7fd02a9696b.png" width="690" height="348" />有毒。。</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551880234_5c7fd02a9696b.png" width="690" height="348" />有毒。。</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551880319_5c7fd07f8e0bb.png" src="images/20190306/1551880319_5c7fd07f8e0bb.png" width="690" height="351" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551880319_5c7fd07f8e0bb.png" width="690" height="351" /></div></noscript>
+<p>抓包看看
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551880444_5c7fd0fc8ec70.png" src="images/20190306/1551880444_5c7fd0fc8ec70.png" width="690" height="256" />
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551880444_5c7fd0fc8ec70.png" width="690" height="256" /></noscript>迫不得已，我试了注入，也gg，怀疑是名字问题，后来爆破用户名也不行。。。
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551881007_5c7fd32fefb51.png" src="images/20190306/1551881007_5c7fd32fefb51.png" width="690" height="361" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551881007_5c7fd32fefb51.png" width="690" height="361" /></div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551880910_5c7fd2ce68f02.png" src="images/20190306/1551880910_5c7fd2ce68f02.png" width="690" height="677" />查看源代码也没有什么东西，点击这个链接也没有用</div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551880910_5c7fd2ce68f02.png" width="690" height="677" />查看源代码也没有什么东西，点击这个链接也没有用</div></noscript>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551881062_5c7fd366179e6.png" src="images/20190306/1551881062_5c7fd366179e6.png" width="690" height="431" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551881062_5c7fd366179e6.png" width="690" height="431" /></div></noscript>
+<div>好像这个注册页面没什么用，换其他的=-=</div>
+<div>好吧，我白痴了~试了登录页面，都登录不了的，这个过吧=-=</div>
+<div><img style="margin:15px auto;" alt="image.png" data-original="images/20190306/1551883142_5c7fdb8610bbd.png" src="images/20190306/1551883142_5c7fdb8610bbd.png" width="690" height="593" /></div>
+<noscript><img style="margin:15px auto;" alt="image.png" src="images/20190306/1551883142_5c7fdb8610bbd.png" width="690" height="593" /></div></noscript>
+<h3> WAVSEP，简单，过<br /></h3>
+</div>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="197203" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

